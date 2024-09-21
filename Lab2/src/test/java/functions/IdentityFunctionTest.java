@@ -1,5 +1,4 @@
 package functions;
-import functions.IdentityFunction;
 import org.junit.jupiter.api.*;
 
 class IdentityFunctionTest {
