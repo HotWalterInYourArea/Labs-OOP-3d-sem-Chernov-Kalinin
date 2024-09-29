@@ -2,7 +2,6 @@ package functions;
 
 public class NewtsMethFunction implements MathFunction
 {
-    private final static double EPSILON = 1E-9;
     private final  MathFunction in_func;
     private final  double min_error;
     public NewtsMethFunction(MathFunction func,double error)

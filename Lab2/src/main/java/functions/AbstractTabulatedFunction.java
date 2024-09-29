@@ -1,6 +1,7 @@
 package functions;
 
 public abstract class AbstractTabulatedFunction implements TabulatedFunction{
+    protected int count=0;
     protected abstract int floorIndexOfX(double x);
     protected abstract double extrapolateRight(double x);
     protected abstract double extrapolateLeft(double x);
@@ -14,7 +15,7 @@ public abstract class AbstractTabulatedFunction implements TabulatedFunction{
         if(x<this.leftBound())return extrapolateLeft(x);
         else if(x>this.rightBound())return extrapolateRight(x);
         else if(indexOfX(x)==-1)return interpolate(x,floorIndexOfX(x));
-        return
+        return getY(indexOfX(x));
     }
 
 }
