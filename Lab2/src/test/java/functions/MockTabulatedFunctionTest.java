@@ -33,10 +33,6 @@ class MockTabulatedFunctionTest {
     }
     @Test
     void applyInterpolate2Param_ExpectEqual_Interpolate(){
-        double x0=t_func.getX(0);
-        double x1=t_func.getX(1);
-        double y0=t_func.getY(0);
-        double y1=t_func.getY(1);
         assertEquals(t_func.interpolate(1.5,0),t_func.apply(1.5));
     }
 
