@@ -1,3 +1,5 @@
+package functions;
+
 import static java.lang.Math.pow;
 
 public class SqrFunction implements MathFunction {
