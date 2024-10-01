@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MockTabulatedFunctionTest {
-    private MockTabulatedFunction t_func;
+    private  MockTabulatedFunction t_func;
     @BeforeEach
     void tFunConstructor(){
         t_func=new MockTabulatedFunction(1.0,2.0,3.0,4.0);

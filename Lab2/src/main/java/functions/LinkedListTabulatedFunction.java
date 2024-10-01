@@ -1,6 +1,6 @@
 package functions;
 
-public class LinkedListTabulatedFunction extends AbstractTabulatedFunction{
+public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Removable{
     protected static class Node {
         public Node next=null;
         public Node prev=null;
@@ -35,7 +35,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction{
                 xTo=tmp;
             }
             for(int i=0;i<=count;i++){
-                double x0 = xFrom+(xTo-xFrom)/count*i;
+                double x0 = xFrom + (xTo - xFrom) / count * i;
                 addNode(x0,source.apply(x0));
             }
         }else{
@@ -143,6 +143,28 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction{
             return interpolate(x,floorNodeOfX(x));
         }
         return getY(floorIndexOfX((x)));
+    }
+    @Override
+    public void remove(int index){
+        if(count!=1){
+            if(index==0){
+                this.head.next.prev=this.head.prev;
+                this.head=this.head.next;
+            }
+            else if(index==count-1){
+                this.head.prev.prev.next=this.head;
+                this.head.prev=this.head.prev.prev;
+            }
+            else{
+                Node nu_node = getNode(index);
+                nu_node.prev.next=nu_node.next;
+                nu_node.next.prev=nu_node.prev;
+            }
+        }
+        else {
+            head=null;
+        }
+        count--;
     }
 
 }
