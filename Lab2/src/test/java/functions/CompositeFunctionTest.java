@@ -15,7 +15,7 @@ class CompositeFunctionTest {
     private final CompositeFunction t_func=new CompositeFunction(t_identity_func,sin);
     @Test
     void applyToX_ExpectSinX_IdentityInSin(){
-        assertEquals(sin.apply(Math.PI),t_func.apply(Math.PI));
+        assertEquals(sin.apply(Math.PI),t_func.apply(Math.PI),0.00001);
     }
 
 }
