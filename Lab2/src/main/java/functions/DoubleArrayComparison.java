@@ -1,4 +1,4 @@
-package fuctions;
+package functions;
 import static java.lang.Math.abs;
 
 public class DoubleArrayComparison {
