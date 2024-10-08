@@ -3,7 +3,7 @@ package functions;
 
 import java.util.Arrays;
 
-public class ArrayTabulatedFunction extends AbstractTabulated_Function {
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable{
     protected double[] xValues = new double[4];
     protected double[] yValues = new double[4];
     protected int count = xValues.length;
@@ -134,6 +134,41 @@ public class ArrayTabulatedFunction extends AbstractTabulated_Function {
             return yValues[0];
         }
         return (yValues[floorIndex] + ((yValues[floorIndex+1]-yValues[floorIndex])/(xValues[floorIndex+1]-xValues[floorIndex]))*(x-xValues[floorIndex]));
+    }
+    @Override
+    public void insert(double x,double y){
+        int index=indexOfX(x);
+        if(index == -1){
+            int before;
+            int after;
+            double[] nu_arrX= new double[count+1];
+            double[] nu_arrY= new double[count+1];
+            if(x<leftBound()){
+                before=0;
+            }
+            else if(x>rightBound()){
+                before=count;
+            }
+            else{
+                before=floorIndexOfX(x)+1;
+            }
+            nu_arrX[before]=x;
+            nu_arrY[before]=y;
+            for(int i = 0;i<before;i++){
+                nu_arrX[i]=this.xValues[i];
+                nu_arrY[i]=this.yValues[i];
+            }
+            for(int i = before;i<count;i++){
+                nu_arrX[i+1]=this.xValues[i];
+                nu_arrY[i+1]=this.yValues[i];
+            }
+            count++;
+            this.xValues=nu_arrX;
+            this.yValues=nu_arrY;
+        }
+        else{
+            this.yValues[index]=y;
+        }
     }
 
 }

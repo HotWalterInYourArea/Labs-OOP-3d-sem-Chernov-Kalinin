@@ -50,9 +50,74 @@ class LinkedListTabulatedFunctionTest {
         assertEquals(2.0,t_func2.leftBound());
     }
     @Test
-    void leftBound_ExpectLastElem_4countFunc(){
+    void rightBound_ExpectLastElem_4countFunc(){
         assertEquals(5.0,t_func1.rightBound());
         assertEquals(4.0,t_func2.rightBound());
+    }
+    @Test
+    void indexOfX_ExpectFound_ElemInList(){
+        assertEquals(3,t_func1.indexOfX(t_func1.rightBound()));
+        assertEquals(3,t_func2.indexOfX(t_func2.rightBound()));
+    }
+    @Test
+    void indexOfX_ExpectNotFound_ElemNotInList(){
+        assertEquals(-1,t_func1.indexOfX(27.5));
+        assertEquals(-1,t_func2.indexOfX(27.5));
+    }
+    @Test
+    void indexOfY_ExpectFound_ElemNotInList(){
+        assertEquals(0,t_func1.indexOfY(t_func1.getY(0)));
+        assertEquals(0,t_func2.indexOfY(t_func2.getY(0)));
+    }
+    @Test
+    void indexOfY_ExpectNotFound_ElemNotInList(){
+        assertEquals(-1,t_func1.indexOfX(27.5));
+        assertEquals(-1,t_func2.indexOfX(27.5));
+    }
+    @Test
+    void floorIndexOfX_ExpectZero_ElemLessThanLeft(){
+        assertEquals(0,t_func1.floorIndexOfX(0));
+        assertEquals(0,t_func2.floorIndexOfX(0));
+    }
+    @Test
+    void floorIndexOfX_ExpectCount_ElemGreaterThanRight(){
+        assertEquals(t_func1.count,t_func1.floorIndexOfX(27.5));
+        assertEquals(t_func2.count,t_func2.floorIndexOfX(27.5));
+    }
+    @Test
+    void floorIndexOfX_ExpectZero_ElemLessThanSecond(){
+        assertEquals(0,t_func1.floorIndexOfX(1.5));
+        assertEquals(0,t_func2.floorIndexOfX(2.5));
+    }
+    @Test
+    void remove_ExpectSecondToLast_RemoveLast(){
+        t_func1.remove(t_func1.count-1);
+        t_func2.remove(t_func2.count-1);
+        assertEquals(3,t_func1.count);
+        assertEquals(3,t_func2.count);
+        assertEquals(4.0,t_func1.rightBound());
+        assertEquals(t_func2.getX(2),t_func2.rightBound());
+    }
+    @Test
+    void remove_ExpectSecond_RemoveFirst(){
+        t_func1.remove(0);
+        t_func2.remove(0);
+        assertEquals(3,t_func1.count);
+        assertEquals(3,t_func2.count);
+        assertEquals(2.5,t_func1.leftBound());
+        assertEquals(t_func2.getX(0),t_func2.leftBound());
+    }
+    @Test
+    void applyInterpolate4Param_ExpectEqual_Interpolate(){
+        double x0=t_func1.getX(0);
+        double x1=t_func1.getX(1);
+        double y0=t_func1.getY(0);
+        double y1=t_func1.getY(1);
+        assertEquals(t_func1.interpolate(1.5,x0,x1,y0,y1),t_func1.apply(1.5));
+    }
+    @Test
+    void applyInterpolate2Param_ExpectEqual_Interpolate(){
+        assertEquals(t_func1.interpolate(1.5,0),t_func1.apply(1.5));
     }
 
 }
