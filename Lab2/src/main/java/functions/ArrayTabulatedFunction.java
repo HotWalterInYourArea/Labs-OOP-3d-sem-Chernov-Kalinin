@@ -10,6 +10,16 @@ public class ArrayTabulatedFunction extends AbstractTabulated_Function {
     public double[] copyXValue = Arrays.copyOf(xValues, xValues.length);
     public double[] copyYValue = Arrays.copyOf(yValues, yValues.length);
     public ArrayTabulatedFunction(double[] xValues, double[] yValues) {
+        for(int i = 0; i < (xValues.length-1); i++) {
+            if (xValues.length != yValues.length) {
+                return;
+            }
+        }
+        for(int i = 0; i < (xValues.length-1); i++){
+            if(xValues[i] >= xValues[i+1]){
+                return;
+            }
+        }
         this.xValues = xValues;
         this.yValues = yValues;
     }
