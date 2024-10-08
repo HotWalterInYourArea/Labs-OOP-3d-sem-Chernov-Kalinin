@@ -8,7 +8,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         public double y;
         public Node(double x,double y){this.x=x;this.y=y;}
     }
-    private Node head=null;
+    protected Node head=null;
     protected void addNode(double x,double y){
         Node nu_node=new Node(x,y);
         if (this.head!=null){
