@@ -1,6 +1,6 @@
 package functions;
 
-public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Removable{
+public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Removable, Insertable {
     protected static class Node {
         public Node next=null;
         public Node prev=null;
@@ -166,5 +166,55 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         }
         count--;
     }
+    public void insert(double x, double y) {
+        if (this.head == null) {
+            addNode(x, y);
+            return;
+        } else {
+            Node currentNode = this.head;
+            do {
+                if (currentNode.x == x) {
+                    currentNode.y = y;
+                    return;
+                }
+                currentNode = currentNode.next;
+            } while (currentNode != this.head);
+            do {
+                if ((currentNode.x < x) && (currentNode.next.x > x)) {
+                    Node nu_node = new Node(x, y);
+                    Node last = currentNode;
+                    nu_node.prev = last;
+                    nu_node.next = currentNode.next;
+                    last.next = nu_node;
+                    currentNode.next.prev = nu_node;
+                    this.count++;
+                    return;
+                }
+                currentNode = currentNode.next;
+            } while (currentNode != this.head);
+            if (leftBound() > x){
+                Node nu_node = new Node(x, y);
+                Node last = currentNode.prev;
+                nu_node.prev = last;
+                nu_node.next = currentNode;
+                last.next = nu_node;
+                currentNode.prev = nu_node;
+                this.head = nu_node;
+                this.count++;
+                return;
+            }
+            else{
+                Node nu_node = new Node(x, y);
+                Node last = currentNode.prev.prev;
+                nu_node.prev = last;
+                nu_node.next = currentNode;
+                last.next = nu_node;
+                currentNode.prev = nu_node;
+                this.count++;
+                return;
+            }
+        }
+        }
 
-}
+
+    }
