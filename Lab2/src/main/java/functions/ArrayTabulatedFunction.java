@@ -1,15 +1,26 @@
 package functions;
 
 
+import org.apache.commons.lang3.ArrayUtils;
 import java.util.Arrays;
 
-public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable{
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable{
     protected double[] xValues = new double[4];
     protected double[] yValues = new double[4];
     protected int count = xValues.length;
     public double[] copyXValue = Arrays.copyOf(xValues, xValues.length);
     public double[] copyYValue = Arrays.copyOf(yValues, yValues.length);
     public ArrayTabulatedFunction(double[] xValues, double[] yValues) {
+        for(int i = 0; i < (xValues.length-1); i++) {
+            if (xValues.length != yValues.length) {
+                return;
+            }
+        }
+        for(int i = 0; i < (xValues.length-1); i++){
+            if(xValues[i] >= xValues[i+1]){
+                return;
+            }
+        }
         this.xValues = xValues;
         this.yValues = yValues;
     }
@@ -170,6 +181,13 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
             this.yValues[index]=y;
         }
     }
+    public void remove(int index) {
+        this.xValues = ArrayUtils.remove(this.xValues, index);
+        this.yValues = ArrayUtils.remove(this.yValues, index);
+
+    }
+
+
 
 }
 
