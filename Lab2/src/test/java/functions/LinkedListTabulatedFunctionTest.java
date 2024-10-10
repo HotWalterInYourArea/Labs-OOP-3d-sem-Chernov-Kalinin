@@ -108,6 +108,33 @@ class LinkedListTabulatedFunctionTest {
         assertEquals(t_func2.getX(0),t_func2.leftBound());
     }
     @Test
+    void insert_ExpectFirst_insertFirst(){
+        t_func1.insert(0,2.0);
+        t_func2.insert(0,3.0);
+        assertEquals(5,t_func1.count);
+        assertEquals(5,t_func2.count);
+        assertEquals(0,t_func1.leftBound());
+        assertEquals(0,t_func2.leftBound());
+    }
+    @Test
+    void insert_ExpectLast_insertLast(){
+        t_func1.insert(27.0,2.0);
+        t_func2.insert(30.0,3.0);
+        assertEquals(5,t_func1.count);
+        assertEquals(5,t_func2.count);
+        assertEquals(27.0,t_func1.rightBound());
+        assertEquals(30.0,t_func2.rightBound());
+    }
+    @Test
+    void insert_ExpectThird_insertMiddle(){
+        t_func1.insert(2.6,2.0);
+        t_func2.insert(3.0,3.0);
+        assertEquals(5,t_func1.count);
+        assertEquals(5,t_func2.count);
+        assertEquals(2.6,t_func1.getX(2));
+        assertEquals(3.0,t_func2.getX(2));
+    }
+    @Test
     void applyInterpolate4Param_ExpectEqual_Interpolate(){
         double x0=t_func1.getX(0);
         double x1=t_func1.getX(1);
