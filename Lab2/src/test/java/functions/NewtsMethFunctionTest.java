@@ -25,5 +25,9 @@ class NewtsMethFunctionTest {
     void applyNewtsMethToSin_NotConverge_DerivIsZero(){
         assertTrue(Double.isNaN(t_func2.apply(Math.PI/2)));
     }
+    @Test
+    void applyNewtsMethToSin_ExpectFalse_LowPrecision(){
+        assertTrue(Math.abs(Math.PI-t_func1.apply(2))<1);
+    }
 
 }
