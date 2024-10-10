@@ -1,5 +1,6 @@
 package functions;
-import org.testng.annotations.Test;
+//import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 import static functions.DoubleArrayComparison.areEqual;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
