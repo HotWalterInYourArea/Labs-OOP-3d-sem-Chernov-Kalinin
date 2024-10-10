@@ -9,10 +9,10 @@ public abstract class AbstractTabulated_Function implements TabulatedFunction {
         return (leftY + ((rightY-leftY)/(rightX-leftX))*(x-leftX));
     }
     public double apply(double x) {
-        if (x < leftBound()) {
+        if (x < this.leftBound()) {
             return extrapolateLeft(x);
         } else {
-            if (x > rightBound()) {
+            if (x > this.rightBound()) {
                 return extrapolateRight(x);
             }
         }
