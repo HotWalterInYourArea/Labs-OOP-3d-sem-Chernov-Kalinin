@@ -205,7 +205,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
             }
             else{
                 Node nu_node = new Node(x, y);
-                Node last = currentNode.prev.prev;
+                Node last = currentNode.prev;
                 nu_node.prev = last;
                 nu_node.next = currentNode;
                 last.next = nu_node;
