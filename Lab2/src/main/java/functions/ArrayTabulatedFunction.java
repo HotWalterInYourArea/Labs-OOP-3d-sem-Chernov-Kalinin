@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable{
     protected double[] xValues = new double[4];
     protected double[] yValues = new double[4];
-    protected int count = xValues.length;
+    protected int count;
     public double[] copyXValue = Arrays.copyOf(xValues, xValues.length);
     public double[] copyYValue = Arrays.copyOf(yValues, yValues.length);
     public ArrayTabulatedFunction(double[] xValues, double[] yValues) {
@@ -23,6 +23,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         }
         this.xValues = xValues;
         this.yValues = yValues;
+        count = xValues.length;
     }
     public ArrayTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
         this.count = count;

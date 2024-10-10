@@ -4,10 +4,9 @@ import static functions.DoubleArrayComparison.areEqual;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SqrFunctionTest {
-
+    SqrFunction c = new SqrFunction();
     @Test
     public void apply() {
-        SqrFunction c = new SqrFunction();
 
         double[] actual = new double[]{6.60117372, 87.6977934, 6241, 14641};
 
