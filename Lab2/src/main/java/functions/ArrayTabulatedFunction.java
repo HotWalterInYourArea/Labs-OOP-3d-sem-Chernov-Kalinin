@@ -2,6 +2,7 @@ package functions;
 
 
 import org.apache.commons.lang3.ArrayUtils;
+
 import java.util.Arrays;
 
 public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable{
@@ -11,7 +12,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     public double[] copyXValue = Arrays.copyOf(xValues, xValues.length);
     public double[] copyYValue = Arrays.copyOf(yValues, yValues.length);
     public ArrayTabulatedFunction(double[] xValues, double[] yValues) {
-        for(int i = 0; i < (xValues.length-1); i++) {
+        for(int i = 0; i <= (xValues.length-1); i++) {
             if (xValues.length != yValues.length) {
                 return;
             }
@@ -31,25 +32,28 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
             double temp = xFrom;
             xFrom = xTo;
             xTo = temp;
-        } else if (xFrom == xTo) {
-            for (int i = 0; i < (count - 1); i++) {
+        }
+        xValues = new double[count];
+        yValues = new double[count];
+        if (xFrom == xTo) {
+            for (int i = 0; i <= (count - 1); i++) {
                 xValues[i] = xFrom;
             }
-            for (int i = 0; i < (count - 1); i++) {
+            for (int i = 0; i <= (count - 1); i++) {
                 yValues[i] = source.apply(xFrom);
             }
-
-        } else {
+        }
+        else {
             xValues[0] = xFrom;
             xValues[count - 1] = xTo;
             yValues[0] = source.apply(xFrom);
             yValues[count - 1] = source.apply(xTo);
             double step = (xTo - xFrom)/(count - 1);
-            for (int i = 1; i < (count - 2); i++) {
-                xValues[i] = i * step;
+            for (int i = 1; i <= (count - 2); i++) {
+                xValues[i] = xFrom + i * step;
             }
-            for (int i = 1; i < (count - 2); i++) {
-                yValues[i] = source.apply(i * step);
+            for (int i = 1; i <= (count - 2); i++) {
+                yValues[i] = source.apply(xFrom + i * step);
             }
         }
 
@@ -87,7 +91,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     public int indexOfX(double x) {
-        for (int i = 0; i < (count - 1); i++) {
+        for (int i = 0; i <= (count - 1); i++) {
             if (xValues[i] == x) {
                 return i;
             }
@@ -96,7 +100,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     }
 
     public int indexOfY(double y) {
-        for (int i = 0; i < (count - 1); i++) {
+        for (int i = 0; i <= (count - 1); i++) {
             if (yValues[i] == y) {
                 return i;
             }
@@ -106,7 +110,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     protected int floorIndexOfX(double x) {
-        for (int i = 0; i < (count - 1); i++) {
+        for (int i = 0; i <= (count - 1); i++) {
             if (x == xValues[i]) {
                 return i;
             }
@@ -116,7 +120,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
                 return i;
             }
         }
-        for (int i = 0; i < (count-1); i++) {
+        for (int i = 0; i <= (count-1); i++) {
             if (x < xValues[i]){
                 return 0;
             }
