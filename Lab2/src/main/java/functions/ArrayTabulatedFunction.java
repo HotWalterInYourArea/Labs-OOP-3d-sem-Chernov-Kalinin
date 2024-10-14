@@ -1,6 +1,9 @@
 package functions;
 
 
+import exceptions.ArrayIsNotSortedException;
+import exceptions.DifferentLengthOfArraysException;
+import exceptions.InterpolationException;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Arrays;
@@ -11,17 +14,9 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     protected int count;
     public double[] copyXValue = Arrays.copyOf(xValues, xValues.length);
     public double[] copyYValue = Arrays.copyOf(yValues, yValues.length);
-    public ArrayTabulatedFunction(double[] xValues, double[] yValues) {
-        for(int i = 0; i <= (xValues.length-1); i++) {
-            if (xValues.length != yValues.length) {
-                return;
-            }
-        }
-        for(int i = 0; i < (xValues.length-1); i++){
-            if(xValues[i] >= xValues[i+1]){
-                return;
-            }
-        }
+    public ArrayTabulatedFunction(double[] xValues, double[] yValues) throws DifferentLengthOfArraysException, ArrayIsNotSortedException {
+        checkLengthIsTheSame(xValues, yValues);
+        checkSorted(xValues);
         this.xValues = xValues;
         this.yValues = yValues;
         count = xValues.length;
@@ -110,11 +105,6 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     protected int floorIndexOfX(double x) {
-        for (int i = 0; i <= (count - 1); i++) {
-            if (x == xValues[i]) {
-                return i;
-            }
-        }
         for (int i = 0; i < (count - 1); i++) {
             if ((x > xValues[i]) && (x < xValues[i + 1])) {
                 return i;
@@ -145,7 +135,19 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     }
 
     @Override
-    protected double interpolate(double x, int floorIndex) {
+    protected double interpolate(double x, int floorIndex) throws InterpolationException {
+        if(floorIndex >= (count-1)){
+            throw new InterpolationException();
+        }
+        for(int i = 0; i <= (count - 1); i++){
+           if(x == xValues[i]){
+               throw new InterpolationException();
+           }
+       }
+        if(!(x > xValues[floorIndex])&&(x< xValues[floorIndex+1])){
+            throw new InterpolationException();
+        }
+
         if(count == 1){
             return yValues[0];
         }

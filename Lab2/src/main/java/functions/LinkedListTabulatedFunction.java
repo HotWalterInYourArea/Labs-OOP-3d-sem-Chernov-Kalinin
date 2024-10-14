@@ -1,5 +1,9 @@
 package functions;
 
+import exceptions.ArrayIsNotSortedException;
+import exceptions.DifferentLengthOfArraysException;
+import exceptions.InterpolationException;
+
 public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Removable, Insertable {
     protected static class Node {
         public Node next=null;
@@ -24,7 +28,9 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         }
         this.count++;
     }
-    public LinkedListTabulatedFunction(double[] xValues,double[] yValues){
+    public LinkedListTabulatedFunction(double[] xValues,double[] yValues) throws DifferentLengthOfArraysException, ArrayIsNotSortedException {
+        checkLengthIsTheSame(xValues, yValues);
+        checkSorted(xValues);
         for(int i=0;i<xValues.length;i++){addNode(xValues[i],yValues[i]);}
     }
     public LinkedListTabulatedFunction(MathFunction source,double xFrom,double xTo,int count){
@@ -119,7 +125,18 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         return interpolate(x,floorNode.x,floorNode.next.x,floorNode.y,floorNode.next.y);
     }
     @Override
-    protected  double interpolate(double x,int floorIndex){
+    protected  double interpolate(double x,int floorIndex) throws InterpolationException {
+        if(floorIndex >= (count-1)){
+            throw new InterpolationException();
+        }
+        for(int i = 0; i <= (count - 1); i++){
+            if(x == getNode(i).x){
+                throw new InterpolationException();
+            }
+        }
+        if(!((x > getNode(floorIndex).x)&&(x < getNode((floorIndex+1)).x))){
+            throw new InterpolationException();
+        }
         Node nu_node=getNode(floorIndex);
         return interpolate(x,nu_node);
     }

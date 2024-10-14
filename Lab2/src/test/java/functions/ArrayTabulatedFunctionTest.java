@@ -1,5 +1,7 @@
 package functions;
 
+import exceptions.InterpolationException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -114,8 +116,6 @@ class ArrayTabulatedFunctionTest {
         assertEquals(expected3, 2);
         int expected4 = test2.floorIndexOfX(40000);
         assertEquals(expected4, 5);
-        int expected5 = test2.floorIndexOfX(1234);
-        assertEquals(expected5, 4);
     }
 
     @Test
@@ -148,5 +148,30 @@ class ArrayTabulatedFunctionTest {
         int help2 = test2.floorIndexOfX(500);
         double expected2 = test2.interpolate(500, help2);
         assertEquals(expected2, -781.7428516, 0.00001);
+        Assertions.assertThrows(InterpolationException.class, () -> {
+            ArrayTabulatedFunction test3 = new ArrayTabulatedFunction(new double[]{1, 2, 3, 4}, new double[]{1, 2, 3, 4});
+            int help3 = test3.floorIndexOfX(-6);
+            test3.interpolate(-6, help3);
+        });
+            Assertions.assertThrows(InterpolationException.class, () -> {
+            ArrayTabulatedFunction test4 = new ArrayTabulatedFunction(new double[]{1, 2, 3, 4}, new double[]{1, 2, 3, 4});
+            int help4 = test4.floorIndexOfX(1);
+            test4.interpolate(1, help4);
+        });
+        Assertions.assertThrows(InterpolationException.class, () -> {
+            ArrayTabulatedFunction test5 = new ArrayTabulatedFunction(new double[]{1, 2, 3, 4}, new double[]{1, 2, 3, 4});
+            int help5 = test5.floorIndexOfX(3);
+            test5.interpolate(3, help5);
+        });
+        Assertions.assertThrows(InterpolationException.class, () -> {
+            ArrayTabulatedFunction test6 = new ArrayTabulatedFunction(new double[]{1, 2, 3, 4}, new double[]{1, 2, 3, 4});
+            int help6 = test6.floorIndexOfX(4);
+            test6.interpolate(4, help6);
+        });
+        Assertions.assertThrows(InterpolationException.class, () -> {
+            ArrayTabulatedFunction test7 = new ArrayTabulatedFunction(new double[]{1, 2, 3, 4}, new double[]{1, 2, 3, 4});
+            int help7 = test7.floorIndexOfX(7);
+            test7.interpolate(7, help7);
+        });
     }
 }

@@ -1,5 +1,7 @@
 package functions;
 
+import exceptions.InterpolationException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -141,6 +143,31 @@ class LinkedListTabulatedFunctionTest {
         double y0=t_func1.getY(0);
         double y1=t_func1.getY(1);
         assertEquals(t_func1.interpolate(1.5,x0,x1,y0,y1),t_func1.apply(1.5));
+        Assertions.assertThrows(InterpolationException.class, () -> {
+            LinkedListTabulatedFunction test1 = new LinkedListTabulatedFunction(new double[]{1, 2, 3, 4}, new double[]{1, 2, 3, 4});
+            int help1 = test1.floorIndexOfX(-6);
+            test1.interpolate(-6, help1);
+        });
+        Assertions.assertThrows(InterpolationException.class, () -> {
+            LinkedListTabulatedFunction test2 = new LinkedListTabulatedFunction(new double[]{1, 2, 3, 4}, new double[]{1, 2, 3, 4});
+            int help2 = test2.floorIndexOfX(1);
+            test2.interpolate(1, help2);
+        });
+        Assertions.assertThrows(InterpolationException.class, () -> {
+            LinkedListTabulatedFunction test3 = new LinkedListTabulatedFunction(new double[]{1, 2, 3, 4}, new double[]{1, 2, 3, 4});
+            int help3 = test3.floorIndexOfX(3);
+            test3.interpolate(3, help3);
+        });
+        Assertions.assertThrows(InterpolationException.class, () -> {
+            LinkedListTabulatedFunction test4 = new LinkedListTabulatedFunction(new double[]{1, 2, 3, 4}, new double[]{1, 2, 3, 4});
+            int help4 = test4.floorIndexOfX(4);
+            test4.interpolate(4, help4);
+        });
+        Assertions.assertThrows(InterpolationException.class, () -> {
+            LinkedListTabulatedFunction test5 = new LinkedListTabulatedFunction(new double[]{1, 2, 3, 4}, new double[]{1, 2, 3, 4});
+            int help5 = test5.floorIndexOfX(7);
+            test5.interpolate(7, help5);
+        });
     }
     @Test
     void applyInterpolate2Param_ExpectEqual_Interpolate(){

@@ -1,21 +1,44 @@
 package functions;
 
-public abstract class AbstractTabulatedFunction implements TabulatedFunction{
-    protected int count=0;
+import exceptions.ArrayIsNotSortedException;
+import exceptions.DifferentLengthOfArraysException;
+
+public abstract class AbstractTabulatedFunction implements TabulatedFunction {
+    protected int count = 0;
+
     protected abstract int floorIndexOfX(double x);
+
     protected abstract double extrapolateRight(double x);
+
     protected abstract double extrapolateLeft(double x);
-    protected abstract double interpolate(double x,int floorIndex);
-    protected double interpolate(double x,double leftX,double rightX,double leftY,double rightY){
-        if(rightX==leftX)return leftY;
-        return leftY + (rightY-leftY)/(rightX-leftX)*(x-leftX);
+
+    protected abstract double interpolate(double x, int floorIndex);
+
+    protected double interpolate(double x, double leftX, double rightX, double leftY, double rightY) {
+        if (rightX == leftX) return leftY;
+        return leftY + (rightY - leftY) / (rightX - leftX) * (x - leftX);
     }
+
     @Override
-    public double apply(double x){
-        if(x<this.leftBound())return extrapolateLeft(x);
-        else if(x>this.rightBound())return extrapolateRight(x);
-        else if(indexOfX(x)==-1)return interpolate(x,floorIndexOfX(x));
+    public double apply(double x) {
+        if (x < this.leftBound()) return extrapolateLeft(x);
+        else if (x > this.rightBound()) return extrapolateRight(x);
+        else if (indexOfX(x) == -1) return interpolate(x, floorIndexOfX(x));
         return getY(indexOfX(x));
     }
 
+    public static void checkLengthIsTheSame(double[] xValues, double[] yValues) throws DifferentLengthOfArraysException {
+        if (xValues.length != yValues.length) {
+            throw new DifferentLengthOfArraysException();
+        }
+    }
+
+
+    public static void checkSorted(double[] xValues) throws ArrayIsNotSortedException {
+        for (int i = 0; i <= (xValues.length - 2); i++) {
+            if (xValues[i] >= xValues[i + 1]) {
+                throw new ArrayIsNotSortedException();
+            }
+        }
+    }
 }
