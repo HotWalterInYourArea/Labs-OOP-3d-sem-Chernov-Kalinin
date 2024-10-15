@@ -233,5 +233,9 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         }
         }
 
+    public void iterator() throws UnsupportedOperationException{
+        throw new UnsupportedOperationException();
+    }
+
 
     }

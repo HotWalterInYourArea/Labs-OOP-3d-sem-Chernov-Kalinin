@@ -33,8 +33,6 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         if (xFrom == xTo) {
             for (int i = 0; i <= (count - 1); i++) {
                 xValues[i] = xFrom;
-            }
-            for (int i = 0; i <= (count - 1); i++) {
                 yValues[i] = source.apply(xFrom);
             }
         }
@@ -46,13 +44,9 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
             double step = (xTo - xFrom)/(count - 1);
             for (int i = 1; i <= (count - 2); i++) {
                 xValues[i] = xFrom + i * step;
-            }
-            for (int i = 1; i <= (count - 2); i++) {
                 yValues[i] = source.apply(xFrom + i * step);
             }
         }
-
-
     }
 
     public int getCount() {
@@ -110,11 +104,10 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
                 return i;
             }
         }
-        for (int i = 0; i <= (count-1); i++) {
-            if (x < xValues[i]){
+        if (x < xValues[0]){
                 return 0;
-            }
         }
+
         return count;
     }
 
@@ -194,7 +187,9 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     }
 
-
-
+    @Override
+    public void iterator() throws UnsupportedOperationException{
+        throw new UnsupportedOperationException();
+    }
 }
 
