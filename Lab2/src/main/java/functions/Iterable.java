@@ -1,5 +1,7 @@
 package functions;
 
+import java.util.Iterator;
+
 public interface Iterable<T> {
-    void iterator() throws UnsupportedOperationException;
+    Iterator<T> iterator() throws UnsupportedOperationException;
 }

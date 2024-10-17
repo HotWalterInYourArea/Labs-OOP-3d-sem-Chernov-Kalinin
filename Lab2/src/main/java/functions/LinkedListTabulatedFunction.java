@@ -4,6 +4,8 @@ import exceptions.ArrayIsNotSortedException;
 import exceptions.DifferentLengthOfArraysException;
 import exceptions.InterpolationException;
 
+import java.util.Iterator;
+
 public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Removable, Insertable {
     protected static class Node {
         public Node next=null;
@@ -233,7 +235,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         }
         }
 
-    public void iterator() throws UnsupportedOperationException{
+    public Iterator<Point> iterator() throws UnsupportedOperationException{
         throw new UnsupportedOperationException();
     }
 
