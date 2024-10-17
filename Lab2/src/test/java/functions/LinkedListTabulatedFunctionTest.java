@@ -4,6 +4,8 @@ import exceptions.InterpolationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,10 +19,17 @@ class LinkedListTabulatedFunctionTest {
         }
     };
     @BeforeEach
-    void t_constructor(){
-        t_func1= new LinkedListTabulatedFunction(new double[] {1.0,2.5,4.0,5.0},
-        new double[] {4.0,5.0,6.0,2.0});
-        t_func2= new LinkedListTabulatedFunction(exp,2.0,4.0,3);
+    void t_constructor() {
+        t_func1 = new LinkedListTabulatedFunction(new double[]{1.0, 2.5, 4.0, 5.0},new double[]{4.0, 5.0, 6.0, 2.0});
+        t_func2 = new LinkedListTabulatedFunction(exp, 2.0, 4.0, 3);
+    }
+    @Test
+    void constructorIllegalArgumentExceptionThrow_ExpectThrow_TwoParamConstructor(){
+        assertThrows(IllegalArgumentException.class,()->{LinkedListTabulatedFunction t_func=new LinkedListTabulatedFunction(new double[]{0},new double[]{0});});
+    }
+    @Test
+    void constructorIllegalArgumentExceptionThrow_ExpectThrow_FourParamConstructor(){
+        assertThrows(IllegalArgumentException.class,()->{LinkedListTabulatedFunction t_func=new LinkedListTabulatedFunction(exp,0,1,1);});
     }
     @Test
     void getCount_ExpectEqual_4countFunc(){
@@ -28,14 +37,44 @@ class LinkedListTabulatedFunctionTest {
         assertEquals(4,t_func2.getCount());
     }
     @Test
+    void getXIllegalArgumentException_ExpectThrown_IndexLessThanZero(){
+        assertThrows(IllegalArgumentException.class,()->t_func1.getX(-1));
+        assertThrows(IllegalArgumentException.class,()->t_func2.getX(-1));
+    }
+    @Test
+    void getXIllegalArgumentException_ExpectThrown_IndexGreaterThanCount(){
+        assertThrows(IllegalArgumentException.class,()->t_func1.getX(4));
+        assertThrows(IllegalArgumentException.class,()->t_func2.getX(4));
+    }
+    @Test
     void getX_ExpectFirstElem_4ElemFunc(){
         assertEquals(1.0,t_func1.getX(0));
         assertEquals(2.0,t_func2.getX(0));
     }
     @Test
+    void getYIllegalArgumentException_ExpectThrown_IndexLessThanZero(){
+        assertThrows(IllegalArgumentException.class,()->t_func1.getY(-1));
+        assertThrows(IllegalArgumentException.class,()->t_func2.getY(-1));
+    }
+    @Test
+    void getYIllegalArgumentException_ExpectThrown_IndexGreaterThanCount(){
+        assertThrows(IllegalArgumentException.class,()->t_func1.getY(4));
+        assertThrows(IllegalArgumentException.class,()->t_func2.getY(4));
+    }
+    @Test
     void getY_ExpectFirstElem_4ElemFunc(){
         assertEquals(4.0,t_func1.getY(0));
         assertEquals(exp.apply(2.0),t_func2.getY(0),0.00001);
+    }
+    @Test
+    void setYIllegalArgumentException_ExpectThrown_IndexLessThanZero(){
+        assertThrows(IllegalArgumentException.class,()->t_func1.setY(-1,0));
+        assertThrows(IllegalArgumentException.class,()->t_func2.setY(-1,0));
+    }
+    @Test
+    void setYIllegalArgumentException_ExpectThrown_IndexGreaterThanCount(){
+        assertThrows(IllegalArgumentException.class,()->t_func1.setY(4,0));
+        assertThrows(IllegalArgumentException.class,()->t_func2.setY(4,0));
     }
     @Test
     void setY_ExpectUnequal_SettingFirstElem(){
@@ -77,9 +116,9 @@ class LinkedListTabulatedFunctionTest {
         assertEquals(-1,t_func2.indexOfX(27.5));
     }
     @Test
-    void floorIndexOfX_ExpectZero_ElemLessThanLeft(){
-        assertEquals(0,t_func1.floorIndexOfX(0));
-        assertEquals(0,t_func2.floorIndexOfX(0));
+    void floorIndexOfXIllegalArgument_ExpectThrown_ElemLessThanLeft(){
+        assertThrows(IllegalArgumentException.class,()->t_func1.floorIndexOfX(0));
+        assertThrows(IllegalArgumentException.class,()->t_func1.floorIndexOfX(0));
     }
     @Test
     void floorIndexOfX_ExpectCount_ElemGreaterThanRight(){
@@ -92,6 +131,16 @@ class LinkedListTabulatedFunctionTest {
         assertEquals(0,t_func2.floorIndexOfX(2.5));
     }
     @Test
+    void removeIllegalArgumentException_ExpectThrown_IndexLessThanZero(){
+        assertThrows(IllegalArgumentException.class,()->t_func1.remove(-1));
+        assertThrows(IllegalArgumentException.class,()->t_func2.remove(-1));
+    }
+    @Test
+    void removeIllegalArgumentException_ExpectThrown_IndexGreaterThanCount(){
+        assertThrows(IllegalArgumentException.class,()->t_func1.remove(4));
+        assertThrows(IllegalArgumentException.class,()->t_func2.remove(4));
+    }
+    @Test
     void remove_ExpectSecondToLast_RemoveLast(){
         t_func1.remove(t_func1.count-1);
         t_func2.remove(t_func2.count-1);
@@ -99,6 +148,16 @@ class LinkedListTabulatedFunctionTest {
         assertEquals(3,t_func2.count);
         assertEquals(4.0,t_func1.rightBound());
         assertEquals(t_func2.getX(2),t_func2.rightBound());
+    }
+    @Test
+    void remove_ExpectThird_RemoveSecond(){
+        t_func1.remove(1);
+        double Arg= t_func2.getX(2);
+        t_func2.remove(1);
+        assertEquals(3,t_func1.count);
+        assertEquals(3,t_func2.count);
+        assertEquals(4.0,t_func1.getX(1));
+        assertEquals(Arg,t_func2.getX(1));
     }
     @Test
     void remove_ExpectSecond_RemoveFirst(){
@@ -136,6 +195,7 @@ class LinkedListTabulatedFunctionTest {
         assertEquals(2.6,t_func1.getX(2));
         assertEquals(3.0,t_func2.getX(2));
     }
+
     @Test
     void applyInterpolate4Param_ExpectEqual_Interpolate(){
         double x0=t_func1.getX(0);
@@ -172,6 +232,34 @@ class LinkedListTabulatedFunctionTest {
     @Test
     void applyInterpolate2Param_ExpectEqual_Interpolate(){
         assertEquals(t_func1.interpolate(1.5,0),t_func1.apply(1.5));
+    }
+    @Test
+    void LinkedListIterator_ExpectThrown_While(){
+        assertThrows(NoSuchElementException.class,()-> {
+            Iterator<Point> iterator = t_func1.iterator();
+            Point point = new Point(0, 0);
+            while (iterator.hasNext()) {
+                point = iterator.next();
+            }
+            point=iterator.next();
+        });
+    }
+    @Test
+    void LinkedListIterator_ExpectNoException_While(){
+        Iterator<Point> iterator=t_func1.iterator();
+        Point point=new Point(0,0);
+        while (iterator.hasNext()){
+            point=iterator.next();
+        }
+        assertEquals(point.x,t_func1.rightBound());
+    }
+    @Test
+    void LinkedListIterator_ExpectNoException_For(){
+        double x=0;
+        for (Point point:t_func1){
+            x=point.x;
+        }
+        assertEquals(x,t_func1.rightBound());
     }
 
 }

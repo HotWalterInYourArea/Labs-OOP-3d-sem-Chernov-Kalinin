@@ -7,6 +7,7 @@ import exceptions.InterpolationException;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
 public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable{
     protected double[] xValues = new double[4];
@@ -15,6 +16,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     public double[] copyXValue = Arrays.copyOf(xValues, xValues.length);
     public double[] copyYValue = Arrays.copyOf(yValues, yValues.length);
     public ArrayTabulatedFunction(double[] xValues, double[] yValues) throws DifferentLengthOfArraysException, ArrayIsNotSortedException {
+        if(xValues.length<2)throw new IllegalArgumentException("Construction of a Tabulated function requires at least 2 points");
         checkLengthIsTheSame(xValues, yValues);
         checkSorted(xValues);
         this.xValues = xValues;
@@ -22,6 +24,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         count = xValues.length;
     }
     public ArrayTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
+        if(count<2)throw new IllegalArgumentException("Construction of a Tabulated function requires at least 2 points");
         this.count = count;
         if (xFrom > xTo) {
             double temp = xFrom;
@@ -188,7 +191,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     }
 
     @Override
-    public void iterator() throws UnsupportedOperationException{
+    public Iterator<Point> iterator() throws UnsupportedOperationException{
         throw new UnsupportedOperationException();
     }
 }
