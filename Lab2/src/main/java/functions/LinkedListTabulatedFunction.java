@@ -6,7 +6,7 @@ import exceptions.InterpolationException;
 
 import java.util.Iterator;
 
-public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Removable, Insertable {
+public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Removable, Insertable, Iterable<Point> {
     protected static class Node {
         public Node next=null;
         public Node prev=null;
