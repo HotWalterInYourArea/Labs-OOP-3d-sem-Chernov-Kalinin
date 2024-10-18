@@ -3,10 +3,16 @@ package functions;
 import exceptions.ArrayIsNotSortedException;
 import exceptions.DifferentLengthOfArraysException;
 import exceptions.InterpolationException;
+
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements TabulatedFunction,Removable, Insertable {
+public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements TabulatedFunction,Removable, Insertable, Serializable {
+    @Serial
+    private static final long serialVersionUID = -2011337478607682793L;
+
     protected static class Node {
         public Node next=null;
         public Node prev=null;
@@ -157,7 +163,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         return interpolate(x,nu_node);
     }
     protected  Node floorNodeOfX(double x){
-        if (x < leftBound()) throw new IllegalArgumentException("Argument can't be less than the leftBound");;
+        if (x < leftBound()) throw new IllegalArgumentException("Argument can't be less than the leftBound");
         if (x > rightBound()) return this.head.prev;
         Node nu_node=this.head;
         Node floorNode;
