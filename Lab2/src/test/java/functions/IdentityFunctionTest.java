@@ -14,15 +14,13 @@ class IdentityFunctionTest {
     @Test
     void applyToInt_ExpectEqual_StateThree()
     {
-        double result = t_func.apply(3);
-        assertEquals(3,result);
+        assertEquals(3,t_func.apply(3));
 
     }
     @Test
     void applyToDouble_ExpectEqual_State6PointNine()
     {
-        double result = t_func.apply(6.9);
-        assertEquals(6.9,result);
+        assertEquals(6.9,t_func.apply(6.9));
 
     }
 }

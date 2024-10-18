@@ -5,7 +5,15 @@ import exceptions.DifferentLengthOfArraysException;
 
 public abstract class AbstractTabulatedFunction implements TabulatedFunction {
     protected int count = 0;
-
+    @Override
+    public String toString(){
+        StringBuilder strokostroitel=new StringBuilder();
+        strokostroitel.append(getClass().getSimpleName()).append(" size = ").append(count).append('\n');
+        for(Point p:this){
+            strokostroitel.append('[').append(p.x).append("; ").append(p.y).append(']').append('\n');
+        }
+        return strokostroitel.toString();
+    }
     protected abstract int floorIndexOfX(double x);
 
     protected abstract double extrapolateRight(double x);

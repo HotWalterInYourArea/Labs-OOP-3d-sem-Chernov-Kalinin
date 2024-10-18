@@ -195,7 +195,14 @@ class LinkedListTabulatedFunctionTest {
         assertEquals(2.6,t_func1.getX(2));
         assertEquals(3.0,t_func2.getX(2));
     }
-
+    @Test
+    void extrapolateLeft_ExpectEqual(){
+        assertEquals(3.333333333,t_func1.extrapolateLeft(0),0.000001);
+    }
+    @Test
+    void extrapolateRight_ExpectEqual(){
+        assertEquals(-14,t_func1.extrapolateRight(9),0.000001);
+    }
     @Test
     void applyInterpolate4Param_ExpectEqual_Interpolate(){
         double x0=t_func1.getX(0);

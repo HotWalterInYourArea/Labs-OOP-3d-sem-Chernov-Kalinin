@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class NewtsMethFunctionTest {
+class NewtsMethFunctionTest{
     private final  MathFunction sin=new MathFunction() {
         @Override
         public double apply(double arg) {

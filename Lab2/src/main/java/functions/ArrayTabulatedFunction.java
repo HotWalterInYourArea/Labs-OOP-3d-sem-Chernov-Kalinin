@@ -4,13 +4,13 @@ package functions;
 import exceptions.ArrayIsNotSortedException;
 import exceptions.DifferentLengthOfArraysException;
 import exceptions.InterpolationException;
-import org.apache.commons.lang3.ArrayUtils;
+//import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable, Iterable<Point> {
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable, TabulatedFunction {
     protected double[] xValues = new double[4];
     protected double[] yValues = new double[4];
     protected int count;
@@ -187,8 +187,8 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     }
 
     public void remove(int index) {
-        this.xValues = ArrayUtils.remove(this.xValues, index);
-        this.yValues = ArrayUtils.remove(this.yValues, index);
+        //this.xValues = ArrayUtils.remove(this.xValues, index);
+        //this.yValues = ArrayUtils.remove(this.yValues, index);
 
     }
 
