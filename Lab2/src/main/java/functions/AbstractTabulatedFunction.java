@@ -9,7 +9,7 @@ public abstract class AbstractTabulatedFunction implements TabulatedFunction {
     public String toString(){
         StringBuilder strokostroitel=new StringBuilder();
         strokostroitel.append(getClass().getSimpleName()).append(" size = ").append(count).append('\n');
-        for(Point p:this){
+        for(Point p: this){
             strokostroitel.append('[').append(p.x).append("; ").append(p.y).append(']').append('\n');
         }
         return strokostroitel.toString();

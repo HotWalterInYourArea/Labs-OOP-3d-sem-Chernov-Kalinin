@@ -3,6 +3,8 @@ package functions;
 import exceptions.InterpolationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -173,5 +175,52 @@ class ArrayTabulatedFunctionTest {
             int help7 = test7.floorIndexOfX(7);
             test7.interpolate(7, help7);
         });
+    }
+
+    @Test
+    void iterator() {
+        ArrayTabulatedFunction test1 = new ArrayTabulatedFunction(new double[]{1, 2, 3, 4}, new double[]{1, 2, 3, 4});
+        Iterator<Point> iterator1 = test1.iterator();
+        int j = 0;
+        double[] array1 = new double[6];
+        while (iterator1.hasNext()) {
+            Point point = iterator1.next();
+            array1[j] = point.x;
+            j++;
+        }
+        assertEquals(array1[0], 1);
+        assertEquals(array1[1], 2);
+        assertEquals(array1[2], 3);
+        assertEquals(array1[3], 4);
+        assertEquals(array1[4], 0);
+        assertEquals(array1[4], 0);
+
+        Assertions.assertThrows(NoSuchElementException.class, () -> {
+        ArrayTabulatedFunction test2 = new ArrayTabulatedFunction(new double[]{-10, -2, 35, 64, 87}, new double[]{1, 2, 3, 4, 0});
+        Iterator<Point> iterator2 = test2.iterator();
+        Point[] array2 = new Point[8];
+        double[] array3 = new double[8];
+        int k = 0;
+        for (Point point : array2 ) {
+            point = iterator2.next();
+            array3[k] = point.x;
+            k++;
+        }
+        assertEquals(array3[0], -10);
+        assertEquals(array3[1], -2);
+        assertEquals(array3[2], 35);
+        assertEquals(array3[3], 64);
+        assertEquals(array3[4], 87);
+        assertEquals(array3[5], 0);
+        assertEquals(array3[6], 0);
+        assertEquals(array3[7], 0);
+        });
+
+
+
+
+
+
+
     }
 }

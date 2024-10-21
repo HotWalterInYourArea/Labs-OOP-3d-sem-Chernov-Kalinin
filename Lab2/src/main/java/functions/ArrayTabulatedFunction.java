@@ -4,13 +4,13 @@ package functions;
 import exceptions.ArrayIsNotSortedException;
 import exceptions.DifferentLengthOfArraysException;
 import exceptions.InterpolationException;
-//import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable, TabulatedFunction {
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable {
     protected double[] xValues = new double[4];
     protected double[] yValues = new double[4];
     protected int count;
@@ -18,7 +18,6 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     public double[] copyYValue = Arrays.copyOf(yValues, yValues.length);
 
     public ArrayTabulatedFunction(double[] xValues, double[] yValues) throws DifferentLengthOfArraysException, ArrayIsNotSortedException {
-        if(xValues.length<2)throw new IllegalArgumentException("Construction of a Tabulated function requires at least 2 points");
         checkLengthIsTheSame(xValues, yValues);
         checkSorted(xValues);
         this.xValues = xValues;
@@ -27,7 +26,6 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     }
 
     public ArrayTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
-        if(count<2)throw new IllegalArgumentException("Construction of a Tabulated function requires at least 2 points");
         this.count = count;
         if (xFrom > xTo) {
             double temp = xFrom;
@@ -187,13 +185,35 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     }
 
     public void remove(int index) {
-        //this.xValues = ArrayUtils.remove(this.xValues, index);
-        //this.yValues = ArrayUtils.remove(this.yValues, index);
+        this.xValues = ArrayUtils.remove(this.xValues, index);
+        this.yValues = ArrayUtils.remove(this.yValues, index);
 
     }
 
     @Override
-    public Iterator<Point> iterator() throws UnsupportedOperationException {
-        throw new UnsupportedOperationException();
+    public Iterator<Point> iterator() throws NoSuchElementException {
+
+        Iterator<Point> Iterator1 = new Iterator<>(){
+
+            private int i = 0;
+
+            public boolean hasNext() {
+                if(i < count){
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            public Point next() throws NoSuchElementException {
+                if(hasNext()){
+                    i++;
+                    return new Point(xValues[i-1], yValues[i-1]);
+                } else {
+                    throw new NoSuchElementException();
+                }
+            }
+        };
+        return Iterator1;
     }
 }
