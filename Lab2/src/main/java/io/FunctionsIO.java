@@ -7,9 +7,8 @@ import functions.TabulatedFunction;
 import functions.factory.TabulatedFunctionFactory;
 
 public final class FunctionsIO {
-    private FunctionsIO(){
-        throw new UnsupportedOperationException();
-    }
+    private FunctionsIO() throws UnsupportedOperationException {throw new UnsupportedOperationException();}
+
     static void writeTabulatedFunction(BufferedOutputStream outputStream,TabulatedFunction function) throws IOException{
         DataOutputStream nu_stream=new DataOutputStream(outputStream);
         nu_stream.writeInt(function.getCount());
