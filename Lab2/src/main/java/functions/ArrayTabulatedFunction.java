@@ -18,37 +18,35 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     public double[] copyYValue = Arrays.copyOf(yValues, yValues.length);
 
     public ArrayTabulatedFunction(double[] xValues, double[] yValues) throws DifferentLengthOfArraysException, ArrayIsNotSortedException {
+        if(xValues.length<2)throw new IllegalArgumentException("Construction of a Tabulated function requires at least 2 points");
         checkLengthIsTheSame(xValues, yValues);
         checkSorted(xValues);
         this.xValues = xValues;
         this.yValues = yValues;
-        count = xValues.length;
+        this.count = xValues.length;
     }
 
     public ArrayTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
+        if(count<2)throw new IllegalArgumentException("Construction of a Tabulated function requires at least 2 points");
         this.count = count;
         if (xFrom > xTo) {
             double temp = xFrom;
             xFrom = xTo;
             xTo = temp;
         }
-        xValues = new double[count];
-        yValues = new double[count];
+        xValues = new double[this.count];
+        yValues = new double[this.count];
         if (xFrom == xTo) {
             double help = source.apply(xFrom);
-            for (int i = 0; i <= (count - 1); i++) {
+            for (int i = 0; i < (count); i++) {
                 xValues[i] = xFrom;
                 yValues[i] = help;
             }
         } else {
-            xValues[0] = xFrom;
-            xValues[count - 1] = xTo;
-            yValues[0] = source.apply(xFrom);
-            yValues[count - 1] = source.apply(xTo);
             double step = (xTo - xFrom) / (count - 1);
-            for (int i = 1; i <= (count - 2); i++) {
+            for (int i = 0; i < count; i++) {
                 xValues[i] = xFrom + i * step;
-                yValues[i] = source.apply(xFrom + i * step);
+                yValues[i] = source.apply(xValues[i]);
             }
         }
     }
@@ -185,9 +183,9 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     }
 
     public void remove(int index) {
+        if(this.count==2)throw new UnsupportedOperationException("Cannot remove from a function with only two elements");
         this.xValues = ArrayUtils.remove(this.xValues, index);
         this.yValues = ArrayUtils.remove(this.yValues, index);
-
     }
 
     @Override

@@ -1,4 +1,4 @@
-package operations;
+/**package operations;
 
 import functions.MathFunction;
 import functions.Point;
@@ -35,3 +35,4 @@ public class LeftSteppingDifferentialOperator extends SteppingDifferentialOperat
         return derivative;
     }
 }
+**/

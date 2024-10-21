@@ -1,4 +1,4 @@
-/**package operations;
+package operations;
 
 import functions.Point;
 import functions.TabulatedFunction;
@@ -37,4 +37,3 @@ public class TabulatedDifferentialOperator implements DifferentialOperator<Tabul
         return factory.create(xValues,yValues);
     }
 }
-**/
