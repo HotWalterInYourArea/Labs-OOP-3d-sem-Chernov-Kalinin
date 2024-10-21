@@ -4,9 +4,15 @@ import exceptions.ArrayIsNotSortedException;
 import exceptions.DifferentLengthOfArraysException;
 import exceptions.InterpolationException;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
-public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Removable, Insertable, Iterable<Point> {
+public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements TabulatedFunction,Removable, Insertable, Serializable {
+    @Serial
+    private static final long serialVersionUID = -2011337478607682793L;
+
     protected static class Node {
         public Node next=null;
         public Node prev=null;
@@ -31,24 +37,27 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         this.count++;
     }
     public LinkedListTabulatedFunction(double[] xValues,double[] yValues) throws DifferentLengthOfArraysException, ArrayIsNotSortedException {
+        if(xValues.length<2)throw new IllegalArgumentException("Construction of a Tabulated function requires at least 2 points");
         checkLengthIsTheSame(xValues, yValues);
         checkSorted(xValues);
         for(int i=0;i<xValues.length;i++){addNode(xValues[i],yValues[i]);}
     }
     public LinkedListTabulatedFunction(MathFunction source,double xFrom,double xTo,int count){
+        if(count<2)throw new IllegalArgumentException("Construction of a Tabulated function requires at least 2 points");
         if(Math.abs(xFrom-xTo)>EPSILON){
             if(xFrom>xTo){
                 double tmp= xFrom;
                 xFrom=xTo;
                 xTo=tmp;
             }
-            for(int i=0;i<=count;i++){
-                double x0 = xFrom + (xTo - xFrom) / count * i;
+            double step=(xTo-xFrom)/(count-1);
+            for(int i=0;i<count;i++){
+                double x0 = xFrom + step * i;
                 addNode(x0,source.apply(x0));
             }
         }else{
             double y=source.apply(xFrom);
-            for(int i=0;i<=count;i++){addNode(xFrom,y);}
+            for(int i=0;i<count;i++){addNode(xFrom,y);}
         }
     }
     @Override
@@ -58,6 +67,8 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     @Override
     public double rightBound(){return this.head.prev.x;}
     protected Node getNode(int index){
+        if(index<0)throw new IllegalArgumentException("Index can't be less than zero");
+        if(index>count-1)throw new IllegalArgumentException("Index out of bounds");
         if (index<=((this.count-1)/2)){
             Node nu_node=this.head;
             for(int i=0;i<index;i++){nu_node=nu_node.next;}
@@ -70,11 +81,23 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         }
     }
     @Override
-    public double getX(int index){return getNode(index).x;}
+    public double getX(int index){
+        if(index<0)throw new IllegalArgumentException("Index can't be less than zero");
+        if(index>count-1)throw new IllegalArgumentException("Index out of bounds");
+        return getNode(index).x;
+    }
     @Override
-    public double getY(int index){return getNode(index).y;}
+    public double getY(int index){
+        if(index<0)throw new IllegalArgumentException("Index can't be less than zero");
+        if(index>count-1)throw new IllegalArgumentException("Index out of bounds");
+        return getNode(index).y;
+    }
     @Override
-    public void setY(int index,double value){getNode(index).y=value;}
+    public void setY(int index,double value){
+        if(index<0)throw new IllegalArgumentException("Index can't be less than zero");
+        if(index-1>count)throw new IllegalArgumentException("Index out of bounds");
+        getNode(index).y=value;
+    }
     @Override
     public int indexOfX(double x){
         int index=0;
@@ -93,7 +116,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     }
     @Override
     protected  int floorIndexOfX(double x){
-        if (x < leftBound()) return 0;
+        if (x < leftBound()) {throw new IllegalArgumentException("Argument can't be less than the leftBound");}
         if (x > rightBound()) return count;
         Node nu_node=this.head;
         int index;
@@ -107,7 +130,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     }
     @Override
     protected double extrapolateRight(double x){
-        if(this.head.next==this.head){return this.head.y;}
         double leftX=this.head.prev.prev.x;
         double rightX=this.head.prev.x;
         double leftY=this.head.prev.prev.y;
@@ -116,7 +138,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     }
     @Override
     protected double extrapolateLeft(double x){
-        if(this.head.next==this.head){return this.head.y;}
         double leftX=this.head.x;
         double rightX=this.head.next.x;
         double leftY=this.head.y;
@@ -143,7 +164,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         return interpolate(x,nu_node);
     }
     protected  Node floorNodeOfX(double x){
-        if (x < leftBound()) return this.head;
+        if (x < leftBound()) throw new IllegalArgumentException("Argument can't be less than the leftBound");
         if (x > rightBound()) return this.head.prev;
         Node nu_node=this.head;
         Node floorNode;
@@ -158,30 +179,28 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         if (x < leftBound()) {return extrapolateLeft(x);}
         else if (x > rightBound()) return extrapolateRight(x);
         else if(indexOfX(x)==-1){
-            if(count==1)return x;
             return interpolate(x,floorNodeOfX(x));
         }
         return getY(floorIndexOfX((x)));
     }
     @Override
     public void remove(int index){
-        if(count!=1){
-            if(index==0){
-                this.head.next.prev=this.head.prev;
-                this.head=this.head.next;
-            }
-            else if(index==count-1){
-                this.head.prev.prev.next=this.head;
-                this.head.prev=this.head.prev.prev;
-            }
-            else{
-                Node nu_node = getNode(index);
-                nu_node.prev.next=nu_node.next;
-                nu_node.next.prev=nu_node.prev;
-            }
+        if(count==2)throw new UnsupportedOperationException("Cannot remove from a function with only 2 elements");
+        if(index<0)throw new IllegalArgumentException("Index can't be less than zero");
+        if(index>count-1)throw new IllegalArgumentException("Index out of bounds");
+        if(index==0){
+            this.head.next.prev=this.head.prev;
+            this.head=this.head.next;
         }
-        else {
-            head=null;
+
+        else if(index==count-1){
+            this.head.prev.prev.next=this.head;
+            this.head.prev=this.head.prev.prev;
+        }
+        else{
+            Node nu_node = getNode(index);
+            nu_node.prev.next=nu_node.next;
+            nu_node.next.prev=nu_node.prev;
         }
         count--;
     }
@@ -233,11 +252,27 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
                 return;
             }
         }
-        }
-
-    public Iterator<Point> iterator() throws UnsupportedOperationException{
-        throw new UnsupportedOperationException();
+    }
+    @Override
+    public Iterator<Point> iterator(){
+        return new Iterator<Point>(){
+            private Node nu_node=head;
+            @Override
+            public boolean hasNext(){
+                return nu_node!=null;
+            }
+            @Override
+            public Point next(){
+                if (this.hasNext()){
+                    Point p= new Point(nu_node.x,nu_node.y);
+                    if(nu_node.next==head)nu_node=null;
+                    else nu_node=nu_node.next;
+                    return p;
+                }
+                throw new NoSuchElementException();
+            }
+        };
     }
 
 
-    }
+}

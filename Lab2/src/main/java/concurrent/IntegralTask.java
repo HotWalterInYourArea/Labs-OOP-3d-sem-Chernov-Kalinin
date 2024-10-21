@@ -1,4 +1,5 @@
 package concurrent;
+import functions.MathFunction;
 import functions.TabulatedFunction;
 
 import java.util.concurrent.Callable;
@@ -6,23 +7,21 @@ import java.util.concurrent.Callable;
 public class IntegralTask implements Callable<Double>{
     private final double lowerBound;
     private final double upperBound;
-    private final TabulatedFunction intFunc;
+    private final MathFunction intFunc;
     private int sections=10000;
-    public IntegralTask(TabulatedFunction func,double lower, double upper, int secs){
-        if(func==null)throw new NullPointerException();
+    public IntegralTask(MathFunction func, double lower, double upper, int secs){
         if(secs<=0)throw new IllegalArgumentException();
         if(lower>upper) {
             double temp = lower;
             lower = upper;
-            upper=lower;
+            upper=temp;
         }
         this.lowerBound=lower;
         this.upperBound=upper;
         this.intFunc=func;
         this.sections=secs;
     }
-    public IntegralTask(TabulatedFunction func,double lower, double upper){
-        if(func==null)throw new NullPointerException();
+    public IntegralTask(MathFunction func,double lower, double upper){
         if(lower>upper) {
             double temp = lower;
             lower = upper;

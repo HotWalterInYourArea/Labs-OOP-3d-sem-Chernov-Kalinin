@@ -55,9 +55,9 @@ public class MockTabulatedFunction extends AbstractTabulatedFunction implements 
     protected double interpolate(double x, int floorIndex) {
         return interpolate(x, getX(floorIndex), getX(floorIndex + 1), getY(floorIndex), getY(floorIndex + 1));
     }
+    @Override
     public Iterator<Point> iterator(){
         return null;
     }
-
 
 }

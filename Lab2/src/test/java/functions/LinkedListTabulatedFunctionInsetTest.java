@@ -19,13 +19,5 @@ class LinkedListTabulatedFunctionInsetTest {
         test3.insert(61.8909, 34);
         assertEquals(test3.indexOfX(61.8909), 2);
         assertEquals(test3.indexOfY(34), 2);
-        LinkedListTabulatedFunction test4 = new LinkedListTabulatedFunction(new double[]{}, new double[]{});
-        test4.insert(-345, 908.1);
-        assertEquals(test4.indexOfX(-345), 0);
-        assertEquals(test4.indexOfY(908.1), 0);
-
-
-
-
     }
 }
