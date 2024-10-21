@@ -1,10 +1,10 @@
 package io;
 
+import functions.LinkedListTabulatedFunction;
+import functions.TabulatedFunction;
 import functions.factory.LinkedListTabulatedFunctionFactory;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 
 public class TabulatedFunctionFileInputStream {
     public static void main(String[] args){
@@ -15,5 +15,12 @@ public class TabulatedFunctionFileInputStream {
         catch(IOException e){
             e.printStackTrace();
         }
+        /**try {
+            BufferedReader buffInpStream = new BufferedReader(new InputStreamReader(System.in));
+            TabulatedFunction func=FunctionsIO.readTabulatedFunction(buffInpStream,new LinkedListTabulatedFunctionFactory());
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }**/
     }
 }

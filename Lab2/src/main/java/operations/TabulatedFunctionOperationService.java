@@ -67,4 +67,11 @@ public class TabulatedFunctionOperationService {
     public TabulatedFunction MinusFunction(TabulatedFunction tabulatedFunction1, TabulatedFunction tabulatedFunction2){
         return doOperation(tabulatedFunction1, tabulatedFunction2, Minus);
     }
+    public TabulatedFunction multiply (TabulatedFunction a,TabulatedFunction b){
+        return doOperation(a,b,(u,v)->u*v);
+    }
+    public TabulatedFunction divide (TabulatedFunction a,TabulatedFunction b){
+        return doOperation(a,b,(u,v)->u/v);
+    }
 }
+
