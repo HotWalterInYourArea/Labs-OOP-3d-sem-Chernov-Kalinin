@@ -1,14 +1,46 @@
 package io;
 
 import java.io.*;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.Iterator;
+import java.util.Locale;
 
 import functions.Point;
 import functions.TabulatedFunction;
 import functions.factory.TabulatedFunctionFactory;
 
 public final class FunctionsIO {
-    private FunctionsIO() throws UnsupportedOperationException {throw new UnsupportedOperationException();}
+    private FunctionsIO() throws UnsupportedOperationException {
+        throw new UnsupportedOperationException();
+    }
+
+    public static TabulatedFunction readTabulatedFunction(BufferedReader reader, TabulatedFunctionFactory factory) throws IOException, ParseException {
+        double[] xValues = new double[0];
+        double[] yValues = new double[0];
+        try {
+            String line;
+            NumberFormat numberFormatter = NumberFormat.getInstance(Locale.forLanguageTag("ru"));
+            int count = Integer.parseInt(reader.readLine());
+            xValues = new double[count];
+            yValues = new double[count];
+            int i = 0;
+            while ((line = reader.readLine()) != null) {
+                String[] twoString = line.split(" ");
+                Number numberXValues = numberFormatter.parse(twoString[0]);
+                Number numberYValues = numberFormatter.parse(twoString[1]);
+                xValues[i] = numberXValues.doubleValue();
+                yValues[i] = numberYValues.doubleValue();
+                i++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            new IOException(e);
+        }
+        return factory.create(xValues, yValues);
+
+    }
 
     public static void writeTabulatedFunction(BufferedWriter writer, TabulatedFunction function){
         PrintWriter wrapper = new PrintWriter(writer);
