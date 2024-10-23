@@ -1,28 +1,33 @@
 package functions;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import exceptions.ArrayIsNotSortedException;
 import exceptions.DifferentLengthOfArraysException;
 import exceptions.InterpolationException;
 import org.apache.commons.lang3.ArrayUtils;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable {
-    protected double[] xValues = new double[4];
-    protected double[] yValues = new double[4];
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable, Serializable {
+    @JsonFormat(shape=JsonFormat.Shape.ARRAY)
+    protected double[] xValues;
+    @JsonFormat(shape=JsonFormat.Shape.ARRAY)
+    protected double[] yValues;
     protected int count;
-    public double[] copyXValue = Arrays.copyOf(xValues, xValues.length);
-    public double[] copyYValue = Arrays.copyOf(yValues, yValues.length);
 
-    public ArrayTabulatedFunction(double[] xValues, double[] yValues) throws DifferentLengthOfArraysException, ArrayIsNotSortedException {
+    @JsonCreator
+    public ArrayTabulatedFunction(@JsonProperty(value="xValues") double[] xValues,@JsonProperty(value="yValues") double[] yValues) throws DifferentLengthOfArraysException, ArrayIsNotSortedException {
         if(xValues.length<2)throw new IllegalArgumentException("Construction of a Tabulated function requires at least 2 points");
         checkLengthIsTheSame(xValues, yValues);
         checkSorted(xValues);
-        this.xValues = xValues;
-        this.yValues = yValues;
+        this.xValues = Arrays.copyOf(xValues, xValues.length);
+        this.yValues =Arrays.copyOf(yValues, yValues.length);
         this.count = xValues.length;
     }
 

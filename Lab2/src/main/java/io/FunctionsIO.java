@@ -6,9 +6,11 @@ import java.text.ParseException;
 import java.util.Iterator;
 import java.util.Locale;
 
+import functions.ArrayTabulatedFunction;
 import functions.Point;
 import functions.TabulatedFunction;
 import functions.factory.TabulatedFunctionFactory;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public final class FunctionsIO {
     private FunctionsIO() throws UnsupportedOperationException {
@@ -16,27 +18,22 @@ public final class FunctionsIO {
     }
 
     public static TabulatedFunction readTabulatedFunction(BufferedReader reader, TabulatedFunctionFactory factory) throws IOException, ParseException {
-        double[] xValues = new double[0];
-        double[] yValues = new double[0];
-        try {
-            String line;
-            NumberFormat numberFormatter = NumberFormat.getInstance(Locale.forLanguageTag("ru"));
-            int count = Integer.parseInt(reader.readLine());
-            xValues = new double[count];
-            yValues = new double[count];
-            int i = 0;
-            while ((line = reader.readLine()) != null) {
-                String[] twoString = line.split(" ");
+        int count = Integer.parseInt(reader.readLine());
+        double[] xValues = new double[count];
+        double[] yValues = new double[count];
+        NumberFormat numberFormatter = NumberFormat.getInstance(Locale.forLanguageTag("ru"));
+
+         for(int i=0;i<count;i++){
+             String line=reader.readLine();
+             String[] twoString = line.split(" ");
+             try{
                 Number numberXValues = numberFormatter.parse(twoString[0]);
                 Number numberYValues = numberFormatter.parse(twoString[1]);
                 xValues[i] = numberXValues.doubleValue();
                 yValues[i] = numberYValues.doubleValue();
-                i++;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            new IOException(e);
+            }catch(ParseException e){
+                 throw new IOException(e);
+             }
         }
         return factory.create(xValues, yValues);
 
@@ -78,4 +75,14 @@ public final class FunctionsIO {
         Object function=nu_inStream.readObject();
         return (TabulatedFunction) function;
     }
+    public static void serializeJson(BufferedWriter writer, ArrayTabulatedFunction function)throws IOException{
+        ObjectMapper objectMapper=new ObjectMapper();
+        writer.write(objectMapper.writeValueAsString(function));
+        writer.flush();
+    }
+    public static ArrayTabulatedFunction deserializeJson(BufferedReader reader)throws IOException{
+        ObjectMapper objectMapper=new ObjectMapper();
+        return objectMapper.readerFor(ArrayTabulatedFunction.class).readValue(reader);
+    }
+
 }
