@@ -74,17 +74,17 @@ class FunctionsIOTest {
         }
         assertEquals(arrFunc.toString(),resultingFunc.toString());
     }
-//    @Test
-//    public void JsonSerializationDeserialization_ArrayTabulated() throws IOException, ClassNotFoundException{
-//        Path tempFile=TEMP.resolve("test_function_binary.bin");
-//        TabulatedFunction resultingFunc;
-//        ArrayTabulatedFunction arrFunc = new ArrayTabulatedFunction(new double[]{0, 1, 3, 4}, new double[]{2, 4, 5, 3});
-//        try(BufferedOutputStream arrStream=new BufferedOutputStream(Files.newOutputStream(tempFile))){
-//            FunctionsIO.serialize(arrStream,arrFunc);
-//        }
-//        try(BufferedInputStream bufferedInputStream=new BufferedInputStream(Files.newInputStream(tempFile))) {
-//            resultingFunc=FunctionsIO.deserialize(bufferedInputStream);
-//        }
-//        assertEquals(arrFunc.toString(),resultingFunc.toString());
-//    }
+    @Test
+    public void SerializationDeserialization_ArrayTabulated() throws IOException, ClassNotFoundException{
+        Path tempFile=TEMP.resolve("test_function_binary.bin");
+        TabulatedFunction resultingFunc;
+        ArrayTabulatedFunction arrFunc = new ArrayTabulatedFunction(new double[]{0, 1, 3, 4}, new double[]{2, 4, 5, 3});
+        try(BufferedOutputStream arrStream=new BufferedOutputStream(Files.newOutputStream(tempFile))){
+            FunctionsIO.serialize(arrStream,arrFunc);
+        }
+        try(BufferedInputStream bufferedInputStream=new BufferedInputStream(Files.newInputStream(tempFile))) {
+            resultingFunc=FunctionsIO.deserialize(bufferedInputStream);
+        }
+        assertEquals(arrFunc.toString(),resultingFunc.toString());
+    }
 }

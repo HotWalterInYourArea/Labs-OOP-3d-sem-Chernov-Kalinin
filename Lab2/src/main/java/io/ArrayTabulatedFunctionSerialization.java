@@ -18,7 +18,6 @@ public class ArrayTabulatedFunctionSerialization {
             FunctionsIO.serialize(bos1, test1DO1);
             FunctionsIO.serialize(bos1, test1DO2);
             bos1.flush();
-            bos1.close();
         } catch (IOException e) {
 
             e.printStackTrace();
@@ -31,14 +30,9 @@ public class ArrayTabulatedFunctionSerialization {
             System.out.println(test1.toString());
             System.out.println(test1DO1.toString());
             System.out.println(test1DO2.toString());
-        } catch (IOException e) {
-
-            e.printStackTrace();
-
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
 
             e.printStackTrace();
         }
-
     }
 }

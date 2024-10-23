@@ -19,8 +19,6 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     @JsonFormat(shape=JsonFormat.Shape.ARRAY)
     protected double[] yValues;
     protected int count;
-    public double[] copyXValue = Arrays.copyOf(xValues, xValues.length);
-    public double[] copyYValue = Arrays.copyOf(yValues, yValues.length);
 
     @JsonCreator
     public ArrayTabulatedFunction(@JsonProperty(value="xValues") double[] xValues,@JsonProperty(value="yValues") double[] yValues) throws DifferentLengthOfArraysException, ArrayIsNotSortedException {
