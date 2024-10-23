@@ -207,7 +207,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     public void insert(double x, double y) {
         if (this.head == null) {
             addNode(x, y);
-            return;
         } else {
             Node currentNode = this.head;
             do {
@@ -239,7 +238,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
                 currentNode.prev = nu_node;
                 this.head = nu_node;
                 this.count++;
-                return;
             }
             else{
                 Node nu_node = new Node(x, y);
@@ -249,7 +247,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
                 last.next = nu_node;
                 currentNode.prev = nu_node;
                 this.count++;
-                return;
             }
         }
     }
