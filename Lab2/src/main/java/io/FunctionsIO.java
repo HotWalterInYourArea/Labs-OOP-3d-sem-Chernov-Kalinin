@@ -11,6 +11,12 @@ import functions.TabulatedFunction;
 import functions.factory.TabulatedFunctionFactory;
 
 public final class FunctionsIO {
+    public static void serialize(BufferedOutputStream stream, TabulatedFunction function) throws IOException {
+        ObjectOutputStream serialiseStream = new ObjectOutputStream(stream);
+        serialiseStream.writeObject(function);
+        serialiseStream.flush();
+    }
+
     private FunctionsIO() throws UnsupportedOperationException {
         throw new UnsupportedOperationException();
     }

@@ -6,11 +6,12 @@ import exceptions.DifferentLengthOfArraysException;
 import exceptions.InterpolationException;
 import org.apache.commons.lang3.ArrayUtils;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable {
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable, Serializable {
     protected double[] xValues = new double[4];
     protected double[] yValues = new double[4];
     protected int count;

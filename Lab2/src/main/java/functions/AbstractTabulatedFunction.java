@@ -3,6 +3,8 @@ package functions;
 import exceptions.ArrayIsNotSortedException;
 import exceptions.DifferentLengthOfArraysException;
 
+import java.io.Serializable;
+
 public abstract class AbstractTabulatedFunction implements TabulatedFunction {
     protected int count = 0;
     @Override

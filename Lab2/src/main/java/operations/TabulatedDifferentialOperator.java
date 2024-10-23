@@ -10,7 +10,7 @@ public class TabulatedDifferentialOperator implements DifferentialOperator<Tabul
     TabulatedDifferentialOperator(TabulatedFunctionFactory fac){
         this.factory=fac;
     }
-    TabulatedDifferentialOperator(){
+    public TabulatedDifferentialOperator(){
         this.factory=new ArrayTabulatedFunctionFactory();
     }
 
