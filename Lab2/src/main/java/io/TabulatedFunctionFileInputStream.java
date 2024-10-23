@@ -16,12 +16,12 @@ public class TabulatedFunctionFileInputStream {
         catch(IOException e){
             e.printStackTrace();
         }
-        /**try {
-           BufferedReader buffInpStream = new BufferedReader(new InputStreamReader(System.in));
-           TabulatedFunction func=FunctionsIO.readTabulatedFunction(buffInpStream,new LinkedListTabulatedFunctionFactory());
-       }
-        catch (IOException e){
-           e.printStackTrace();
-        }**/
+//        try {
+//           BufferedReader buffInpStream = new BufferedReader(new InputStreamReader(System.in));
+//           TabulatedFunction func=FunctionsIO.readTabulatedFunction(buffInpStream,new LinkedListTabulatedFunctionFactory());
+//       }
+//        catch (IOException e){
+//           e.printStackTrace();
+//        }
     }
 }
