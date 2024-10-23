@@ -80,5 +80,18 @@ class TabulatedFunctionOperationServiceTest {
                     new ArrayTabulatedFunction((double x)->{return 2.0;},0,1000,100));
         });
     }
+    @Test
+    void getFactory_ExpectLinkedList(){
+        TabulatedFunctionOperationService serviceT=new TabulatedFunctionOperationService(new LinkedListTabulatedFunctionFactory());
+        assertInstanceOf(LinkedListTabulatedFunctionFactory.class,serviceT.getFactory());
+
+    }
+    @Test
+    void setFactory_ExpectLinkedList(){
+        TabulatedFunctionOperationService serviceT=new TabulatedFunctionOperationService();
+        serviceT.setFactory(new LinkedListTabulatedFunctionFactory());
+        assertInstanceOf(LinkedListTabulatedFunctionFactory.class,serviceT.getFactory());
+
+    }
 
 }

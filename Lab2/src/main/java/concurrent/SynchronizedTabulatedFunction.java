@@ -1,10 +1,11 @@
-/**package concurrent;
+package concurrent;
 
 import functions.Point;
 import functions.TabulatedFunction;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import operations.TabulatedFunctionOperationService;
 
 public class SynchronizedTabulatedFunction implements TabulatedFunction {
     private final TabulatedFunction synchFunc;
@@ -54,6 +55,12 @@ public class SynchronizedTabulatedFunction implements TabulatedFunction {
         }
     }
     @Override
+    public double rightBound(){
+        synchronized (synchFunc){
+            return this.synchFunc.leftBound();
+        }
+    }
+    @Override
     public double apply(double x){
         synchronized (synchFunc){
             return this.synchFunc.apply(x);
@@ -81,4 +88,4 @@ public class SynchronizedTabulatedFunction implements TabulatedFunction {
         }
     }
 
-}**/
+}
