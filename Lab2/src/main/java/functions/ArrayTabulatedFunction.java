@@ -6,6 +6,8 @@ import exceptions.ArrayIsNotSortedException;
 import exceptions.DifferentLengthOfArraysException;
 import exceptions.InterpolationException;
 import org.apache.commons.lang3.ArrayUtils;
+
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -14,6 +16,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable, Serializable {
+    @Serial
+    private static final long serialVersionUID = 5812983799324394135L;
     @JsonFormat(shape=JsonFormat.Shape.ARRAY)
     protected double[] xValues;
     @JsonFormat(shape=JsonFormat.Shape.ARRAY)

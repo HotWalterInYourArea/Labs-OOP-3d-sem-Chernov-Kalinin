@@ -10,10 +10,15 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements TabulatedFunction,Removable, Insertable, Serializable {
+
+
     @Serial
     private static final long serialVersionUID = -2011337478607682793L;
 
-    protected static class Node {
+    protected static class Node implements Serializable {
+
+        @Serial
+        private static final long serialVersionUID = -592560142370147150L;
         public Node next=null;
         public Node prev=null;
         public double x;
