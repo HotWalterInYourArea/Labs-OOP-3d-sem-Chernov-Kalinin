@@ -43,8 +43,8 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     }
     public LinkedListTabulatedFunction(double[] xValues,double[] yValues) throws DifferentLengthOfArraysException, ArrayIsNotSortedException {
         if(xValues.length<2)throw new IllegalArgumentException("Construction of a Tabulated function requires at least 2 points");
-        checkLengthIsTheSame(xValues, yValues);
-        checkSorted(xValues);
+        checkLengthIsTheSame(xValues, yValues,"Different length of arrays");
+        checkSorted(xValues,"Array not sorted");
         for(int i=0;i<xValues.length;i++){addNode(xValues[i],yValues[i]);}
     }
     public LinkedListTabulatedFunction(MathFunction source,double xFrom,double xTo,int count){

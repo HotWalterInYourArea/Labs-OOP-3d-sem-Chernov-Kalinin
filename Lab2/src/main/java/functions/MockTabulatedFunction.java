@@ -59,5 +59,4 @@ public class MockTabulatedFunction extends AbstractTabulatedFunction implements 
     public Iterator<Point> iterator(){
         return null;
     }
-
 }

@@ -2,6 +2,7 @@ package functions;
 
 import exceptions.InterpolationException;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -9,7 +10,27 @@ import java.util.NoSuchElementException;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArrayTabulatedFunctionTest {
-
+    private ArrayTabulatedFunction t_func1;
+    private ArrayTabulatedFunction t_func2;
+    @BeforeEach
+    void t_constructor() {
+        t_func1 = new ArrayTabulatedFunction(new double[]{1.0, 2.5, 4.0, 5.0},new double[]{4.0, 5.0, 6.0, 2.0});
+        t_func2 = new ArrayTabulatedFunction((x)->Math.exp(x), 2.0, 4.0, 4);
+    }
+    @Test
+    void constructorIllegalArgumentExceptionThrow_ExpectThrow_FourParamConstructor(){
+        assertThrows(IllegalArgumentException.class,()->{ArrayTabulatedFunction t_func=new ArrayTabulatedFunction((x)->Math.exp(x),0,1,1);});
+    }
+    @Test
+    void constructor_ExpectEqual_FourParamConstructorEqualFromTo(){
+        t_func2 = new ArrayTabulatedFunction((x)->Math.exp(x), 4.0, 4.0, 4);
+        assertEquals(4.0,t_func2.getX(2));
+    }
+    @Test
+    void constructor_ExpectEqual_FourParamConstructorFromGreaterTo(){
+        t_func2 = new ArrayTabulatedFunction((x)->Math.exp(x), 5.0, 4.0, 4);
+        assertEquals(4.0,t_func2.getX(0));
+    }
     @Test
     void getCount() {
         ArrayTabulatedFunction test1 = new ArrayTabulatedFunction(new double[]{-1, 0.1111, 78.1, 97.3459}, new double[]{-198, -45, -198, -200.22229});
@@ -215,12 +236,40 @@ class ArrayTabulatedFunctionTest {
         assertEquals(array3[6], 0);
         assertEquals(array3[7], 0);
         });
+    }
+    @Test
+    void insert_ExpectFirst_insertFirst(){
+        t_func1.insert(0,2.0);
+        t_func2.insert(0,3.0);
+        assertEquals(5,t_func1.count);
+        assertEquals(5,t_func2.count);
+        assertEquals(0,t_func1.leftBound());
+        assertEquals(0,t_func2.leftBound());
+    }
+    @Test
+    void insert_ExpectLast_insertLast(){
+        t_func1.insert(27.0,2.0);
+        t_func2.insert(30.0,3.0);
+        assertEquals(5,t_func1.count);
+        assertEquals(5,t_func2.count);
+        assertEquals(27.0,t_func1.rightBound());
+        assertEquals(30.0,t_func2.rightBound());
+    }
+    @Test
+    void remove() {
+        ArrayTabulatedFunction test1 = new ArrayTabulatedFunction(new double[]{-1, 0.1111, 78.1, 97.3459}, new double[]{-198, -45, -198, -200.22229});
+        test1.remove(0);
+        assertArrayEquals(test1.xValues, new double[]{0.1111, 78.1, 97.3459});
+        assertArrayEquals(test1.yValues, new double[]{-45, -198, -200.22229});
 
+        ArrayTabulatedFunction test2 = new ArrayTabulatedFunction(new double[]{-1, 0.1111, 78.1, 97.3459}, new double[]{-198, -45, -198, -200.22229});
+        test2.remove(2);
+        assertArrayEquals(test2.xValues, new double[]{-1, 0.1111, 97.3459});
+        assertArrayEquals(test2.yValues, new double[]{-198, -45, -200.22229});
 
-
-
-
-
-
+        ArrayTabulatedFunction test3 = new ArrayTabulatedFunction(new double[]{-1, 0.1111, 78.1, 97.3459}, new double[]{-198, -45, -198, -200.22229});
+        test3.remove(3);
+        assertArrayEquals(test3.xValues, new double[]{-1, 0.1111, 78.1});
+        assertArrayEquals(test3.yValues, new double[]{-198, -45, -198});
     }
 }

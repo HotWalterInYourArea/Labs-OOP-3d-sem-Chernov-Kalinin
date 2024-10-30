@@ -54,7 +54,7 @@ public class TabulatedFunctionOperationService {
         double[] yValues = new double[a.getCount()];
         for (int i = 0; i < a.getCount(); i++){
             if(array1[i].x != array2[i].x){
-                throw new InconsistentFunctionsException();
+                throw new InconsistentFunctionsException("Arrays are unequal");
             }
             xValues[i] = array1[i].x;
             yValues[i] = operation.apply(array1[i].y, array2[i].y);

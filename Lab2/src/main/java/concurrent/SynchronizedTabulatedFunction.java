@@ -57,7 +57,7 @@ public class SynchronizedTabulatedFunction implements TabulatedFunction {
     @Override
     public double rightBound(){
         synchronized (synchFunc){
-            return this.synchFunc.leftBound();
+            return this.synchFunc.rightBound();
         }
     }
     @Override

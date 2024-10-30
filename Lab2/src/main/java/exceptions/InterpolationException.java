@@ -2,9 +2,9 @@ package exceptions;
 
 public class InterpolationException extends RuntimeException{
     public InterpolationException(){
-
+        super();
     }
     public InterpolationException(String message){
-        throw new RuntimeException(message);
+        super(message);
     }
 }

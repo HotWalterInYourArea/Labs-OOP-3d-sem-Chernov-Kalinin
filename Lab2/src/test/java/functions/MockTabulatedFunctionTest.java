@@ -12,6 +12,32 @@ class MockTabulatedFunctionTest {
         t_func=new MockTabulatedFunction(1.0,2.0,3.0,4.0);
     }
     @Test
+    void getCount_ExpectTwo(){
+        assertEquals(2,t_func.getCount());
+    }
+    @Test
+    void indexOfX_ExpectNotFound(){
+        assertEquals(-1,t_func.indexOfX(0));
+    }
+    @Test
+    void indexOfY_ExpectNotFound(){
+        assertEquals(0,t_func.indexOfY(3.0));
+    }
+    @Test
+    void indexOfX_ExpectFound(){
+        assertEquals(0,t_func.indexOfX(1.0));
+    }
+    @Test
+    void setY_ExpectNewZero(){
+        t_func.setY(0,5.0);
+        assertEquals(5.0,t_func.getY(0));
+    }
+    @Test
+    void setY_ExpectNewOne(){
+        t_func.setY(1,5.0);
+        assertEquals(5.0,t_func.getY(1));
+    }
+    @Test
     void apply_ExpectEqual_ExtrapolateLeft(){
         assertEquals(2.0,t_func.apply(0));
     }

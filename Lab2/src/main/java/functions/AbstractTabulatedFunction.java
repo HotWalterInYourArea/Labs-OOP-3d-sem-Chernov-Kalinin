@@ -38,6 +38,11 @@ public abstract class AbstractTabulatedFunction implements TabulatedFunction {
         return getY(indexOfX(x));
     }
 
+    public static void checkLengthIsTheSame(double[] xValues, double[] yValues, String message) throws DifferentLengthOfArraysException {
+        if (xValues.length != yValues.length) {
+            throw new DifferentLengthOfArraysException(message);
+        }
+    }
     public static void checkLengthIsTheSame(double[] xValues, double[] yValues) throws DifferentLengthOfArraysException {
         if (xValues.length != yValues.length) {
             throw new DifferentLengthOfArraysException();
@@ -45,6 +50,13 @@ public abstract class AbstractTabulatedFunction implements TabulatedFunction {
     }
 
 
+    public static void checkSorted(double[] xValues,String message) throws ArrayIsNotSortedException {
+        for (int i = 0; i <= (xValues.length - 2); i++) {
+            if (xValues[i] >= xValues[i + 1]) {
+                throw new ArrayIsNotSortedException(message);
+            }
+        }
+    }
     public static void checkSorted(double[] xValues) throws ArrayIsNotSortedException {
         for (int i = 0; i <= (xValues.length - 2); i++) {
             if (xValues[i] >= xValues[i + 1]) {

@@ -1,5 +1,7 @@
 package functions;
 
+import exceptions.ArrayIsNotSortedException;
+import exceptions.DifferentLengthOfArraysException;
 import exceptions.InterpolationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,6 +32,14 @@ class LinkedListTabulatedFunctionTest {
     @Test
     void constructorIllegalArgumentExceptionThrow_ExpectThrow_FourParamConstructor(){
         assertThrows(IllegalArgumentException.class,()->{LinkedListTabulatedFunction t_func=new LinkedListTabulatedFunction(exp,0,1,1);});
+    }
+    @Test
+    void constructorArrayIsNotSortedExceptionThrow_ExpectThrow_TwoParamConstructor(){
+        assertThrows(ArrayIsNotSortedException.class,()->{new LinkedListTabulatedFunction(new double[]{2,1},new double[]{2,1});});
+    }
+    @Test
+    void constructorDifferentLengthOfArrayExceptionThrow_ExpectThrow_TwoParamConstructor(){
+        assertThrows(DifferentLengthOfArraysException.class,()->{new LinkedListTabulatedFunction(new double[]{1,2},new double[]{2,1,3});});
     }
     @Test
     void getCount_ExpectEqual_4countFunc(){

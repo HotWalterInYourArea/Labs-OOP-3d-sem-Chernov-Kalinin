@@ -26,8 +26,8 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @JsonCreator
     public ArrayTabulatedFunction(@JsonProperty(value="xValues") double[] xValues,@JsonProperty(value="yValues") double[] yValues) throws DifferentLengthOfArraysException, ArrayIsNotSortedException {
-        if(xValues.length<2)throw new IllegalArgumentException("Construction of a Tabulated function requires at least 2 points");
         checkLengthIsTheSame(xValues, yValues);
+        if(xValues.length<2)throw new IllegalArgumentException("Construction of a Tabulated function requires at least 2 points");
         checkSorted(xValues);
         this.xValues = Arrays.copyOf(xValues, xValues.length);
         this.yValues =Arrays.copyOf(yValues, yValues.length);
@@ -123,24 +123,18 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     protected double extrapolateRight(double x) {
-        if (count == 1) {
-            return yValues[0];
-        }
         return (yValues[count - 2] + ((yValues[count - 1] - yValues[count - 2]) / (xValues[count - 1] - xValues[count - 2])) * (x - xValues[count - 2]));
     }
 
     @Override
     protected double extrapolateLeft(double x) {
-        if (count == 1) {
-            return yValues[0];
-        }
         return (yValues[0] + ((yValues[1] - yValues[0]) / (xValues[1] - xValues[0])) * (x - xValues[0]));
     }
 
     @Override
     protected double interpolate(double x, int floorIndex) throws InterpolationException {
         if (floorIndex >= (count - 1)) {
-            throw new InterpolationException();
+            throw new InterpolationException("Index more than count");
         }
         for (int i = 0; i <= (count - 1); i++) {
             if (x == xValues[i]) {
@@ -149,10 +143,6 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         }
         if (!(x > xValues[floorIndex]) && (x < xValues[floorIndex + 1])) {
             throw new InterpolationException();
-        }
-
-        if (count == 1) {
-            return yValues[0];
         }
         return (yValues[floorIndex] + ((yValues[floorIndex + 1] - yValues[floorIndex]) / (xValues[floorIndex + 1] - xValues[floorIndex])) * (x - xValues[floorIndex]));
     }
@@ -216,7 +206,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
                     i++;
                     return new Point(xValues[i-1], yValues[i-1]);
                 } else {
-                    throw new NoSuchElementException();
+                    throw new NoSuchElementException("No such element was found");
                 }
             }
         };
