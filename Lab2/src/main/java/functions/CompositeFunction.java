@@ -12,4 +12,8 @@ public class CompositeFunction implements MathFunction {
     {
         return secondFunction.apply(firstFunction.apply(x));
     }
+    @Override
+    public String Name() {
+        return this.getClass().getSimpleName() + " " + firstFunction.Name() + " " +secondFunction.Name();
+    }
 }

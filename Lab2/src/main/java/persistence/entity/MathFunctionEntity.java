@@ -12,17 +12,16 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@FieldDefaults(level=AccessLevel.PRIVATE)
 @Entity
 @Table(name="functions")
+@FieldDefaults(level=AccessLevel.PRIVATE)
 public class MathFunctionEntity {
     @Id
     @Column(name="hash_id")
-    Long id;
+    Long function_id;
     @Column(nullable = false)
     String name;
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinColumn(name="function_id")
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,orphanRemoval = true)
     List<PointEntity> points;
     Instant created_at;
     Instant updated_at;
@@ -33,5 +32,11 @@ public class MathFunctionEntity {
     @PreUpdate
     public void pre_update(){
         updated_at=Instant.now();
+    }
+    public void addPoint(PointEntity pointEntity){
+        points.add(pointEntity);
+    }
+    public void removeLastPoint(){
+        points.remove(points.getLast());
     }
 }

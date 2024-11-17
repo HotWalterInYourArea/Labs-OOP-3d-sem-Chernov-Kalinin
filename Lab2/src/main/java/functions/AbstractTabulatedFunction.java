@@ -64,4 +64,12 @@ public abstract class AbstractTabulatedFunction implements TabulatedFunction {
             }
         }
     }
+    @Override
+    public String Name(){
+        return this.toString();
+    }
+    @Override
+    public int HashName(){
+        return this.Name().hashCode();
+    }
 }

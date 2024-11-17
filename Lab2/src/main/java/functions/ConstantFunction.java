@@ -14,4 +14,8 @@ public class ConstantFunction implements MathFunction {
     public double getC() {
         return C;
     }
+    @Override
+    public int HashName() {
+        return this.Name().hashCode() + Double.valueOf(this.C).hashCode();
+    }
 }
