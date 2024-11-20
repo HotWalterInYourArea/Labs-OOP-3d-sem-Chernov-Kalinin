@@ -8,6 +8,8 @@ import java.util.List;
 public class MathFunctionEntityDAO extends DAO<MathFunctionEntity>{
     public MathFunctionEntityDAO(){
         modelClass= MathFunctionEntity.class;
+        EntityManagerFactory emf= Persistence.createEntityManagerFactory("sample");
+        entityManager = emf.createEntityManager();
     }
     public List<MathFunctionEntity> readByName(String name) {
         EntityTransaction t=entityManager.getTransaction();
@@ -23,5 +25,8 @@ public class MathFunctionEntityDAO extends DAO<MathFunctionEntity>{
         t.begin();
         entityManager.remove(entityManager.find(MathFunctionEntity.class,entity.getFunction_id()));
         t.commit();
+    }
+    public void detachAll(){
+        entityManager.close();
     }
 }

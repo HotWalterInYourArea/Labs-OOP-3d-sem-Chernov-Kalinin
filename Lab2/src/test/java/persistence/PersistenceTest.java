@@ -28,7 +28,6 @@ class PersistenceTest {
         EntityManagerFactory emf= Persistence.createEntityManagerFactory("sample");
         em = emf.createEntityManager();
         mathFunctionEntityDAO = new MathFunctionEntityDAO();
-        mathFunctionEntityDAO.setEntityManager(em);
     }
     @BeforeEach
     void stillSettingUp(){
@@ -73,7 +72,7 @@ class PersistenceTest {
     }
     @AfterAll
     static void wrappingUp(){
-        mathFunctionEntityDAO.delete(testMathFunctionEntity);
-        em.close();
+        //mathFunctionEntityDAO.delete(testMathFunctionEntity);
+        mathFunctionEntityDAO.detachAll();
     }
 }

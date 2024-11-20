@@ -13,4 +13,9 @@ import java.io.Serializable;
 public class PointKey implements Serializable {
     private Double x;
     private Long mathFunctionEntity;
+    @Override
+    public boolean equals(Object key){
+        if(this == key)return true;
+        return Double.compare(((PointKey) key).x,this.x )==0 && Long.compare(((PointKey) key).mathFunctionEntity,this.mathFunctionEntity)==0;
+    }
 }

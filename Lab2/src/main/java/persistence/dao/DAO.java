@@ -1,5 +1,8 @@
 package persistence.dao;
 
+import io.dropwizard.core.Configuration;
+import io.dropwizard.hibernate.UnitOfWork;
+import jakarta.annotation.Resource;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -9,9 +12,10 @@ import java.util.Optional;
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
-abstract public class DAO<T> {
+
+abstract public class DAO<T>{
         protected Class<T> modelClass;
-        protected EntityManager entityManager;
+        protected static EntityManager entityManager;
         public void create(T entity) {
             EntityTransaction t=entityManager.getTransaction();
             t.begin();
