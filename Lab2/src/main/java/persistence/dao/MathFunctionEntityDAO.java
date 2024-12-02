@@ -19,11 +19,10 @@ public class MathFunctionEntityDAO extends DAO<MathFunctionEntity>{
         t.commit();
         return typedQuery.getResultList();
     }
-    @Override
-    public void delete(MathFunctionEntity entity) {
+    public void delete(Long Id) {
         EntityTransaction t=entityManager.getTransaction();
         t.begin();
-        entityManager.remove(entityManager.find(MathFunctionEntity.class,entity.getFunction_id()));
+        entityManager.remove(entityManager.find(MathFunctionEntity.class,Id));
         t.commit();
     }
     public void detachAll(){

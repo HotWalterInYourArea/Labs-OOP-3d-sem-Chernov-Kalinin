@@ -1,7 +1,6 @@
 package persistence.dao;
 
 import io.dropwizard.core.Configuration;
-import io.dropwizard.hibernate.UnitOfWork;
 import jakarta.annotation.Resource;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
