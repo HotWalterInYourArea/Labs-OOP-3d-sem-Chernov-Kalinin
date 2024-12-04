@@ -27,7 +27,7 @@ public class UserDAO extends DAO<User> {
     public void delete(String id) {
         EntityTransaction t=entityManager.getTransaction();
         t.begin();
-        entityManager.remove(entityManager.find(MathFunctionEntity.class,id));
+        entityManager.remove(entityManager.find(User.class,id));
         t.commit();
     }
     public void detachAll(){

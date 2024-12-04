@@ -2,6 +2,7 @@ package api.service;
 
 import api.dto.MathFunctionDTO;
 import api.dto.PointDTO;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import persistence.dao.MathFunctionEntityDAO;
 import persistence.entity.MathFunctionEntity;
@@ -9,6 +10,7 @@ import persistence.entity.PointEntity;
 import java.util.ArrayList;
 import java.util.List;
 @NoArgsConstructor
+@Getter
 public class MathFunctionService {
     private final static MathFunctionEntityDAO mathFunctionEntityDAO=new MathFunctionEntityDAO();
     public MathFunctionDTO create (MathFunctionDTO mathFunctionDTO){

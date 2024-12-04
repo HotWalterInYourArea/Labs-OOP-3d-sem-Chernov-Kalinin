@@ -43,7 +43,7 @@ public class UserResource {
     @DELETE
     @Path("/{username}")
     @UnitOfWork
-    public Response deleteUser(@PathParam("username")String username,@Auth UserDTO admin) {
+    public Response deleteUser(@PathParam("username")String username) {
         var user =userService.readById(username);
         Response.ResponseBuilder resp_builder = Response.status(Response.Status.BAD_REQUEST);
         if (user != null) {
@@ -55,6 +55,7 @@ public class UserResource {
     @PUT
     @UnitOfWork
     public Response updateUser(@Valid @NotNull UserDTO userDTO){
-        return Response.ok(userService.update(userDTO)).build();
+        userService.update(userDTO);
+        return Response.ok().build();
     }
 }

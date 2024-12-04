@@ -20,4 +20,15 @@ public class UserDTO implements Principal {
     private String password;
     @JsonProperty("Roles")
     private Set<String> roles;
+    @Override
+    public boolean equals(Object obj){
+        if (obj == null) {
+            return false;
+        }
+        if (obj.getClass() != this.getClass()) {
+            return false;
+        }
+        final UserDTO userDTO = (UserDTO) obj;
+        return this.name.equals(userDTO.getName()) && this.password.equals(userDTO.getPassword())&&this.roles.equals(userDTO.getRoles());
+    }
 }

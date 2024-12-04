@@ -2,32 +2,30 @@ package persistence;
 
 import functions.ConstantFunction;
 import functions.MathFunction;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import persistence.dao.MathFunctionEntityDAO;
+import persistence.dao.UserDAO;
 import persistence.entity.MathFunctionEntity;
 import persistence.entity.PointEntity;
-
+import persistence.entity.User;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PersistenceTest {
     private static  MathFunctionEntity testMathFunctionEntity;
-    private static EntityManager em;
+    private static UserDAO userDAO;
     private  static MathFunctionEntityDAO mathFunctionEntityDAO;
     @BeforeAll
     static void  settingUp(){
-        EntityManagerFactory emf= Persistence.createEntityManagerFactory("sample");
-        em = emf.createEntityManager();
         mathFunctionEntityDAO = new MathFunctionEntityDAO();
+        userDAO=new UserDAO();
     }
     @BeforeEach
     void stillSettingUp(){
@@ -67,12 +65,13 @@ class PersistenceTest {
         mathFunctionEntityDAO.update(testMathFunctionEntity);
         List<MathFunctionEntity> listByNameMathFunctionEntity=mathFunctionEntityDAO.readByName("sample_name");
         List<MathFunctionEntity> listAllMathFunctionEntity=mathFunctionEntityDAO.readAll();
-        assertEquals(listByNameMathFunctionEntity.getFirst().getPoints().getLast().getX(),testMathFunctionEntity.getPoints().getLast().getX());
-        assertEquals(listAllMathFunctionEntity.getFirst().getPoints().getLast().getX(),testMathFunctionEntity.getPoints().getLast().getX());
+        assertEquals(Double.valueOf(1),listByNameMathFunctionEntity.getFirst().getPoints().getLast().getX());
+        assertEquals(Double.valueOf(1),listAllMathFunctionEntity.getLast().getPoints().getLast().getX());
     }
     @AfterAll
     static void wrappingUp(){
-        //mathFunctionEntityDAO.delete(testMathFunctionEntity);
+        mathFunctionEntityDAO.delete(testMathFunctionEntity.getFunction_id());
         mathFunctionEntityDAO.detachAll();
+        userDAO.detachAll();
     }
 }

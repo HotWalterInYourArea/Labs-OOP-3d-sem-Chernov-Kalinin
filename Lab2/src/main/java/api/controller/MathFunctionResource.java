@@ -84,6 +84,14 @@ public class MathFunctionResource {
         var func=mathFunctionService.readById(hashCode);
         if(func!=null) {
             point.setMathId(hashCode);
+            for(PointDTO p : func.getListOfPoints()){
+                if(p.getX().equals(point.getX())){
+                    func.getListOfPoints().remove(p);
+                    func.getListOfPoints().add(point);
+                    mathFunctionService.update(func);
+                    return Response.ok().build();
+                }
+            }
             func.getListOfPoints().add(point);
             mathFunctionService.update(func);
             return Response.ok().build();
