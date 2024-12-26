@@ -40,9 +40,9 @@ public class TabulatedFunctionOperationService {
         double apply(double u, double v);
     }
 
-    BiOperation Plus = (u, v) -> u + v;
+    BiOperation add = (u, v) -> u + v;
 
-    BiOperation Minus = (u, v) -> u - v;
+    BiOperation subtract = (u, v) -> u - v;
 
     private TabulatedFunction doOperation(TabulatedFunction a, TabulatedFunction b, BiOperation operation){
         if(a.getCount() != b.getCount()){
@@ -61,11 +61,11 @@ public class TabulatedFunctionOperationService {
         }
         return factory.create(xValues, yValues);
     }
-    public TabulatedFunction PlusFunction(TabulatedFunction tabulatedFunction1, TabulatedFunction tabulatedFunction2){
-        return doOperation(tabulatedFunction1, tabulatedFunction2, Plus);
+    public TabulatedFunction add(TabulatedFunction tabulatedFunction1, TabulatedFunction tabulatedFunction2){
+        return doOperation(tabulatedFunction1, tabulatedFunction2, add);
     }
-    public TabulatedFunction MinusFunction(TabulatedFunction tabulatedFunction1, TabulatedFunction tabulatedFunction2){
-        return doOperation(tabulatedFunction1, tabulatedFunction2, Minus);
+    public TabulatedFunction subtract(TabulatedFunction tabulatedFunction1, TabulatedFunction tabulatedFunction2){
+        return doOperation(tabulatedFunction1, tabulatedFunction2, subtract);
     }
     public TabulatedFunction multiply (TabulatedFunction a,TabulatedFunction b){
         return doOperation(a,b,(u,v)->u*v);

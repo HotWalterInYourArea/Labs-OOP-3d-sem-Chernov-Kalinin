@@ -1,5 +1,8 @@
 package functions;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import exceptions.ArrayIsNotSortedException;
 import exceptions.DifferentLengthOfArraysException;
 import exceptions.InterpolationException;
@@ -10,13 +13,10 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Removable, Insertable, Serializable {
-
-
     @Serial
     private static final long serialVersionUID = -2011337478607682793L;
 
     protected static class Node implements Serializable {
-
         @Serial
         private static final long serialVersionUID = -592560142370147150L;
         public Node next=null;
@@ -41,7 +41,8 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         }
         this.count++;
     }
-    public LinkedListTabulatedFunction(double[] xValues,double[] yValues) throws DifferentLengthOfArraysException, ArrayIsNotSortedException {
+    @JsonCreator
+    public LinkedListTabulatedFunction(@JsonProperty("xValues") double[] xValues,@JsonProperty("yValues") double[] yValues) throws DifferentLengthOfArraysException, ArrayIsNotSortedException {
         if(xValues.length<2)throw new IllegalArgumentException("Construction of a Tabulated function requires at least 2 points");
         checkLengthIsTheSame(xValues, yValues,"Different length of arrays");
         checkSorted(xValues,"Array not sorted");
@@ -275,6 +276,29 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
             }
         };
     }
+    @JsonGetter("xValues")
+    public double[] getXValues() {
+        return toArrays()[0];
+    }
 
+    @JsonGetter("yValues")
+    public double[] getYValues() {
+        return toArrays()[1];
+    }
 
+    private double[][] toArrays() {
+        double[] xValues = new double[count];
+        double[] yValues = new double[count];
+
+        Node current = head;
+        int i = 0;
+        while (i != count) {
+            xValues[i] = current.x;
+            yValues[i] = current.y;
+            current = current.next;
+            i++;
+        }
+
+        return new double[][] { xValues, yValues };
+    }
 }

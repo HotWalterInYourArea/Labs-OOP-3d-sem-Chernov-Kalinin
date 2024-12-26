@@ -1,7 +1,11 @@
 package functions;
 
+import java.io.Serial;
+
 public class ConstantFunction implements MathFunction {
 
+    @Serial
+    private static final long serialVersionUID = -4689371820401686270L;
     private final double C;
 
     public ConstantFunction(double C) {

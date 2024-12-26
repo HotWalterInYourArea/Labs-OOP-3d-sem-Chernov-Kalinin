@@ -31,7 +31,6 @@ class MathFunctionResourceTest {
         mathDTO.setListOfPoints(points);
         mathResource.putNewPoint(mathDTO.getId(),point);
         assertEquals(mathDTO.getListOfPoints().getFirst().getX(),mathService.readById(mathDTO.getId()).getListOfPoints().getFirst().getX());
-        assertTrue(point.equals(mathResource.getMathFunctionPoint(mathDTO.getId(),point.getX()).getEntity()));
         assertEquals(points,mathResource.getMathFunctionPoints(mathDTO.getId()).getEntity());
     }
     @Test

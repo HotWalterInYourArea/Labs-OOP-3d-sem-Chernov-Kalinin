@@ -6,7 +6,9 @@ import java.text.ParseException;
 import java.util.Iterator;
 import java.util.Locale;
 
+import com.thoughtworks.xstream.XStream;
 import functions.ArrayTabulatedFunction;
+import functions.LinkedListTabulatedFunction;
 import functions.Point;
 import functions.TabulatedFunction;
 import functions.factory.TabulatedFunctionFactory;
@@ -56,7 +58,7 @@ public final class FunctionsIO {
         }
         wrapper.flush();
     }
-    static void writeTabulatedFunction(BufferedOutputStream outputStream,TabulatedFunction function) throws IOException{
+    public static void writeTabulatedFunction(BufferedOutputStream outputStream,TabulatedFunction function) throws IOException{
         DataOutputStream nu_stream=new DataOutputStream(outputStream);
         nu_stream.writeInt(function.getCount());
         for(Point p:function){
@@ -65,7 +67,7 @@ public final class FunctionsIO {
         }
         nu_stream.flush();
     }
-    static TabulatedFunction readTabulatedFunction(BufferedInputStream inputStream, TabulatedFunctionFactory factory)throws IOException{
+    public static TabulatedFunction readTabulatedFunction(BufferedInputStream inputStream, TabulatedFunctionFactory factory)throws IOException{
         DataInputStream nu_inputStream=new DataInputStream(inputStream);
         int count=nu_inputStream.readInt();
         double[] xValues=new double[count];
@@ -76,19 +78,36 @@ public final class FunctionsIO {
         }
         return factory.create(xValues,yValues);
     }
-    static TabulatedFunction deserialize(BufferedInputStream inStream)throws IOException,ClassNotFoundException{
+    public static TabulatedFunction deserialize(BufferedInputStream inStream)throws IOException,ClassNotFoundException{
         ObjectInputStream nu_inStream=new ObjectInputStream(inStream);
         Object function=nu_inStream.readObject();
         return (TabulatedFunction) function;
     }
-    public static void serializeJson(BufferedWriter writer, ArrayTabulatedFunction function)throws IOException{
-        ObjectMapper objectMapper=new ObjectMapper();
-        writer.write(objectMapper.writeValueAsString(function));
+    public static void serializeXml(BufferedWriter writer, TabulatedFunction function) throws IOException {
+        XStream xStream = new XStream();
+        writer.write(xStream.toXML(function));
         writer.flush();
     }
-    public static ArrayTabulatedFunction deserializeJson(BufferedReader reader)throws IOException{
-        ObjectMapper objectMapper=new ObjectMapper();
-        return objectMapper.readerFor(ArrayTabulatedFunction.class).readValue(reader);
+
+    public static TabulatedFunction deserializeXml(BufferedReader reader) {
+        XStream xStream = new XStream();
+        xStream.allowTypeHierarchy(ArrayTabulatedFunction.class);
+        xStream.allowTypeHierarchy(LinkedListTabulatedFunction.class);
+        return (TabulatedFunction) xStream.fromXML(reader);
     }
 
+    public static void serializeJson(BufferedWriter writer, TabulatedFunction function) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        writer.write(objectMapper.writeValueAsString(function));
+
+        writer.flush();
+    }
+
+    public static TabulatedFunction deserializeJson(BufferedReader reader) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        Object function = objectMapper.readerFor(TabulatedFunction.class).readValue(reader);
+        return (TabulatedFunction) function;
+    }
 }

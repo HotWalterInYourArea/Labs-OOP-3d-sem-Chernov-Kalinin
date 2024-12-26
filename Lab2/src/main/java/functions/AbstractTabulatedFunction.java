@@ -3,9 +3,12 @@ package functions;
 import exceptions.ArrayIsNotSortedException;
 import exceptions.DifferentLengthOfArraysException;
 
+import java.io.Serial;
 import java.io.Serializable;
 
-public abstract class AbstractTabulatedFunction implements TabulatedFunction {
+public abstract class AbstractTabulatedFunction implements  TabulatedFunction,Serializable {
+    @Serial
+    private static final long serialVersionUID = 2943157837776423591L;
     protected int count = 0;
     @Override
     public String toString(){

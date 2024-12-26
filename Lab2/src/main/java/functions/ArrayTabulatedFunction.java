@@ -6,7 +6,6 @@ import exceptions.ArrayIsNotSortedException;
 import exceptions.DifferentLengthOfArraysException;
 import exceptions.InterpolationException;
 import org.apache.commons.lang3.ArrayUtils;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Arrays;
@@ -22,7 +21,6 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     protected double[] xValues;
     @JsonFormat(shape=JsonFormat.Shape.ARRAY)
     protected double[] yValues;
-    protected int count;
 
     @JsonCreator
     public ArrayTabulatedFunction(@JsonProperty(value="xValues") double[] xValues,@JsonProperty(value="yValues") double[] yValues) throws DifferentLengthOfArraysException, ArrayIsNotSortedException {

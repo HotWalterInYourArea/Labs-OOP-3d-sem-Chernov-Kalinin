@@ -1,8 +1,12 @@
 package functions;
 
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-public interface MathFunction {
+import java.io.Serializable;
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
+public interface MathFunction extends Serializable {
     double EPSILON=1e-9;
     double apply(double x);
     default String Name(){

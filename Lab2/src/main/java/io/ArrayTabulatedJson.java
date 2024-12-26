@@ -19,8 +19,8 @@ public class ArrayTabulatedJson {
         }
         try (FileReader out2 = new FileReader("Lab2/output/array function.json");
              BufferedReader bos2 = new BufferedReader(out2)) {
-            ArrayTabulatedFunction test2Array = FunctionsIO.deserializeJson(bos2);
-            System.out.println(test2Array);
+            //ArrayTabulatedFunction test2Array = FunctionsIO.deserializeJson(bos2);
+            //System.out.println(test2Array);
         } catch (IOException e) {
             e.printStackTrace();
         }
