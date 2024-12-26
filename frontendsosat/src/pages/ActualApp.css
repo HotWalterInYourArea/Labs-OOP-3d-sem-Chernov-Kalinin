@@ -1,0 +1,62 @@
+h1 {
+    font-size: 1.6em;
+    line-height: 1.1;
+    color: aliceblue;
+    margin-top: 0;
+  }
+  *{
+    padding:0;
+    margin:0;
+  }
+  .settings{
+    position:fixed;
+    left:0;
+    bottom: 0;
+  }
+  .modal-content {
+    background-color: rgb(241, 149, 11);
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 5px;
+    width: 80%; /* Could be more or less, depending on screen size */
+  }
+  .modal {
+    display: flex; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(241, 149, 11); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  ul{
+    list-style-type: none;
+    margin-right: 0;
+  }
+  li{
+    display: inline-block;
+    margin-right: 20px;
+  }
+  nav{
+    position: relative;
+    width: 100%;
+    padding:10px;
+    justify-content: space-between;
+    justify-self: center;
+    align-items: center;
+    margin-bottom: 10px;
+    background: orange;
+  }
+  .button{
+    background: orange;
+    border-radius: 4px;
+  }
+  select{
+    background:"black";
+    color:"white";
+    padding:"2px"
+  }
